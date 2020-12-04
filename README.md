@@ -9,6 +9,11 @@ This repository contains all the algorithms I have encountered so far.
     1) Bubble Sort
     2) Selection Sort
 
+(II) Advanced - 
+    1) Graph Traversal
+        i) Breadth First Search
+        ii) Depth First Search
+
 
 
 ## Physics
