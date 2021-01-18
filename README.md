@@ -50,6 +50,7 @@ This repository contains all the algorithms we have encountered in the fields of
 
 </p>
 
-
+<!--
 ## Physics
 Work in Progress..
+-->
