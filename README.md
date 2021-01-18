@@ -2,11 +2,11 @@
 ### Algorithms used in Computer Science, Physics and Mathematics
 
 This repository contains all the algorithms we have encountered in the fields of Computer Science, Mathematics and Physics!
-
+<br><br>
 
 ## Computer Science
 <p>
-
+<br>
 <!--
 (I) Basic - <br>
     1) Bubble Sort <br>
