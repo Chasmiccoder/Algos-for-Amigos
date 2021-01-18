@@ -23,12 +23,12 @@ This repository contains all the algorithms we have encountered in the fields of
 
 <table>
     <thead>
-        <th>Domain</th>
-        <th>Sub-Domain</th>
-        <th>Topic</th>
+        <th><b>Domain</b></th>
+        <th><b>Sub-Domain</b></th>
+        <th><b>Topic</b></th>
     </thead>
     <tr>
-        <td>1) Data Structures and Algorithms (Fundamentals)</td>
+        <td><i>1) Data Structures and Algorithms (Fundamentals)</i></td>
         <td>a) Sorting</td>
         <td>i) Bubble Sort</td>
     </tr>
@@ -43,7 +43,7 @@ This repository contains all the algorithms we have encountered in the fields of
         <td>iii) Counting Sort</td>
     </tr>
     <tr>
-        <td>2) Machine Learning</td>
+        <td><i>2) Machine Learning</i></td>
         <td>a) Supervised Learning</td>
         <td>i) Regression</td>
     </tr>
