@@ -43,9 +43,13 @@ This repository contains all the algorithms we have encountered in the fields of
     </tr>
     <tr>
         <td>2) Machine Learning</td>
-        <td></td>
-        <td></td>
+        <td>a) Supervised Learning</td>
+        <td>i) Regression</td>
     </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>ii) Classification (KNN, MLP)</td>
 
 
 </p>
