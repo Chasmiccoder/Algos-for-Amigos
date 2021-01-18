@@ -28,17 +28,7 @@ This repository contains all the algorithms we have encountered in the fields of
     </thead>
     <tr>
         <td>1) Data Structures and Algorithms (Fundamentals)</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>a)Sorting</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
+        <td>a) Sorting</td>
         <td>i) Bubble Sort</td>
     </tr>
     <tr>
