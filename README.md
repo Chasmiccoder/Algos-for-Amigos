@@ -8,6 +8,7 @@ This repository contains all the algorithms I have encountered so far.
 
     1) Bubble Sort
     2) Selection Sort
+    3) Counting Sort
 
 (II) Advanced - 
     1) Graph Traversal
