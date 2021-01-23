@@ -30,17 +30,22 @@ This repository contains all the algorithms we have encountered in the fields of
     <tr>
         <td><i>1) Data Structures and Algorithms (Fundamentals)</i></td>
         <td>a) Sorting</td>
-        <td>i) Bubble Sort</td>
+        <td>i) Bubble Sort [p1]</td>
     </tr>
     <tr>
         <td></td>
         <td></td>
-        <td>ii) Selection Sort</td>
+        <td>ii) Selection Sort [p2]</td>
     </tr>
     <tr>
         <td></td>
         <td></td>
-        <td>iii) Counting Sort</td>
+        <td>iii) Counting Sort [p3]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>b) Stack Implementation</td>
+        <td>i) Balanced Bracket Check [p4]</td>
     </tr>
     <tr>
         <td><i>2) Machine Learning</i></td>
@@ -50,7 +55,7 @@ This repository contains all the algorithms we have encountered in the fields of
     <tr>
         <td></td>
         <td></td>
-        <td>ii) Classification (KNN, MLP)</td>
+        <td>ii) Classification [p1] (KNN, MLP)</td>
 
 
 </p>
