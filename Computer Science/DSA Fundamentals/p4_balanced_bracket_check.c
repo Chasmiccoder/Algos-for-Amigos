@@ -11,7 +11,7 @@ Examples -
 " { ( (  "                           Unbalanced, too many opening parentheses.
 " { ( } world ) "                    Unbalanced, braces mismatched.
 
-Pseudocode - 
+Algorithm Explanation -
 Iterate throught the string using integer i
 If the character at ith index is an opening bracket, push it to the stack
 If it is a closing bracket, and its bracket type matches the one in the stack, pop it out (decrement top)
