@@ -22,7 +22,6 @@ was not enough to balance the opening ones.
 
 */
 
-
 #include <stdio.h>
 #include <string.h>
 
@@ -48,7 +47,6 @@ int check_balanced_bracket( char *string, int len ) {
     int top = 0, i = 0;
 
     for ( i = 0; i < len; i++ ) {
-        
         if ( string[i] == '{' || string[i] == '[' || string[i] == '(' ) {
             // If strcmp returns 0, the strings are equal    
             stack[ top ] = string[ i ];
@@ -56,10 +54,8 @@ int check_balanced_bracket( char *string, int len ) {
         }
 
         else if ( string[i] == '}' || string[i] == ']' || string[i] == ')' ) {
-            
             if ( stack[ top-1 ] == opening_type( string[i] ) )
                 top--;
-            
             else 
                 return 2;   
         }
