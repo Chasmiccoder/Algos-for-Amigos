@@ -4,8 +4,9 @@
 This repository contains all the algorithms we have encountered in the fields of Computer Science, Mathematics and Physics!
 <br><br>
 
-### Profound Gratitude to our Contributors -
-<a href="https://github.com/lolzone13">Mohit Manoj (lolzone13)</a>
+### The Amigos -
+<a href="https://github.com/Chasmiccoder">Aryaman Kolhe</a>
+<a href="https://github.com/lolzone13">Mohit Manoj</a>
 
 ## Computer Science
 <p>
