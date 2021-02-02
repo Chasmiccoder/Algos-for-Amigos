@@ -54,6 +54,11 @@ This repository contains all the algorithms we have encountered in the fields of
         <td>i) Balanced Bracket Check [p4]</td>
     </tr>
     <tr>
+        <td></td>
+        <td>c) Interview Related</td>
+        <td>i) Fizzbuzz Problem [p5]</td>
+    </tr>
+    <tr>
         <td><i>2) Machine Learning</i></td>
         <td>a) Supervised Learning</td>
         <td>i) Regression</td>
