@@ -19,6 +19,7 @@ int fib( int n ) {
     return a;
 }
 
+
 int last_digit_of_nth_fib_number( int n ) {
     // F331 = 668 996 615 388 005 031 531 000 081 241 745 415 306 766 517 246 774 551 964 595 292 186 469
     // answer for n = 331 is 9
@@ -31,6 +32,7 @@ int last_digit_of_nth_fib_number( int n ) {
     }
     return a%10;
 }
+
 
 
 int large_nth_fib_number_modulo_m( long long n, int m ) {
@@ -63,6 +65,91 @@ int large_nth_fib_number_modulo_m( long long n, int m ) {
     return answer;
 }
 
+int last_digit_of_sum_of_first_n_fibonacci_numbers_small_n( long long n ) {
+    // Finds the last digit of the sum of first n Fibonacci Numbers
+    // This function works... but breaks once n gets too large. Takes too much time
+
+    long long a = 0;
+    long long b = 1;
+    long long sum = 0;
+    for ( long long i = 0; i < n; i++ ) {
+
+        long long tmp = b%10;
+        b = a%10;
+        a = a%10 + tmp%10;
+        sum+= a%10;
+        
+    }
+    return (int)sum%10;
+}
+
+int last_digit_of_sum_of_first_n_fibonacci_numbers( long long n ) {
+    /* 
+    Uses the naive approach with function named last_digit_of_sum_of_first_n_fibonacci_numbers_small_n ( )
+    to get the repeating pattern, after which it exploits the pattern to find the last digit of the
+    sum of first n Fibonacci Numbers
+
+    From the insight gained, we need to compute the last digit of the sum of fibonacci numbers only till about 100
+    */
+    vector<int> vi;
+    vi.push_back( 0 );
+    vi.push_back( 1 );
+    int len;
+    
+    for ( int i = 2; i < 100; i++ ) {
+        vi.push_back( last_digit_of_sum_of_first_n_fibonacci_numbers_small_n(i) );
+        if ( vi[i] == 1 && vi[i-1] == 0 ) {
+            //len = i-2;
+            len = i - 1;
+            break;
+        }
+    }
+
+    long long index = n%len;
+    int result = vi[ index ];
+    return result;
+}
+
+int naive_approach_last_digit_of_sum_of_first_n_fib_nos( long long n ) {
+    long long sum = 1;
+    long long a = 1;
+    long long b = 0;
+
+    for ( long long i = 2; i <= n; i++ ) {
+        long long tmp = b;
+        b = a;
+        a = a + tmp;
+        sum += a%10;
+    }
+
+    return sum%10;
+}
+
+void stress_testing_last_digit_of_sum_of_first_n_fib_nos( ) {
+    // To see if the algo works for small n ( To check for correctness of the algorithm )
+
+    int testcases = 80;
+    bool passed = true;
+    printf( "Conducting Stress Test\n" );
+
+    for ( int i = 5; i < testcases+5; i++ ) {
+        int first = naive_approach_last_digit_of_sum_of_first_n_fib_nos( i );
+        //int second = last_digit_of_fib_sum( i );
+        int second = last_digit_of_sum_of_first_n_fibonacci_numbers( i );
+        
+        if ( first != second ) {
+            passed = false;
+            printf( "\nN: %d\n", i );
+            printf( "Naive Result: %d\n", first );
+            printf( "Algo: %d\n", second );
+        }
+    }
+
+    if ( passed ) {
+        printf( "Algorithm Passed Stress Test!\n" );
+    }
+}
+
 
 int main() {
     int n,answer;
@@ -76,7 +163,8 @@ int main() {
     printf( "Fast Algorithm: %d\n", answer);
 
     answer = naive_nth_fibonacci_number( n );
-    printf( "Naive Algorithm: %d\n\n", answer );
+    printf( "Naive Algorithm: %d\n\n", answer ); // Really slow for any n > 40
+    // For n = 13, answer is 233
 
     
     // Finding the Last Digit of the nth Fibonacci Number
@@ -86,6 +174,7 @@ int main() {
 
     answer = last_digit_of_nth_fib_number( n );
     printf( "Last digit of %dth Fibonacci Number: %d\n\n", n, answer );
+    // For n = 331, answer is 9
 
 
     // Compute Fn modulo m, where Fn is the nth Fibonacci number. n <= 10^14, m <= 10^3
@@ -97,9 +186,20 @@ int main() {
 
     answer = large_nth_fib_number_modulo_m( num, m );
     printf( "%lldth Fibonacci Number %% %d is: %d\n\n", num, m, answer );
+    // For num = 2816213588, and m = 239, answer is 151
 
 
-    //
+    // Compute the last digit of the sum of the first n Fibonacci Numbers. n <= 10^14
+    printf( "Compute the last digit of the sum of the first n Fibonacci Numbers\n" );
+    printf( "Enter the value for n: " ); 
+    scanf( "%lld", &num );
+
+    stress_testing_last_digit_of_sum_of_first_n_fib_nos( );
+
+    answer = last_digit_of_sum_of_first_n_fibonacci_numbers( num );
+    printf( "Last digit of first %lld Fibonacci Numbers is: %d\n\n", num, answer );
+
+    
 
     
 
