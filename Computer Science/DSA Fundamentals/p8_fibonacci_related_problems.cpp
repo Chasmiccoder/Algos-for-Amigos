@@ -112,6 +112,7 @@ int last_digit_of_sum_of_first_n_fibonacci_numbers( long long n ) {
 
     From the insight gained, we need to compute the last digit of the sum of fibonacci numbers only till about 100
     */
+   
     vector<int> vi;
     vi.push_back( 0 );
     vi.push_back( 1 );
