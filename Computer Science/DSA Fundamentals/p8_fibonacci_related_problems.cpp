@@ -136,7 +136,7 @@ void stress_testing_last_digit_of_sum_of_first_n_fib_nos( ) {
         int first = naive_approach_last_digit_of_sum_of_first_n_fib_nos( i );
         //int second = last_digit_of_fib_sum( i );
         int second = last_digit_of_sum_of_first_n_fibonacci_numbers( i );
-        
+
         if ( first != second ) {
             passed = false;
             printf( "\nN: %d\n", i );
@@ -152,6 +152,7 @@ void stress_testing_last_digit_of_sum_of_first_n_fib_nos( ) {
 
 
 int main() {
+    printf( "Fibonacci Related Problems!\n" );
     int n,answer;
 
     // Finding the nth Fibonacci Number
@@ -198,20 +199,8 @@ int main() {
 
     answer = last_digit_of_sum_of_first_n_fibonacci_numbers( num );
     printf( "Last digit of first %lld Fibonacci Numbers is: %d\n\n", num, answer );
-
-    
-
-    
+    // For num = 100, answer is 5
 
 
-
-
-
-
-
-    
-
-
-    
     return 0;
 }
