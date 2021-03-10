@@ -350,8 +350,8 @@ string Conversion::convert_infix_to_postfix( string expression ) {
         
         string symbol = symbols[i];
 
-        
-        //cout << "SYmbol: " << symbol << endl;
+        // THESE TWO LINES ARE VITAL FOR DEBUGGIN'
+        //cout << "Symbol: " << symbol << endl;
         //print_vector( stack, "OperationStack" );
     
         if ( notOperand( symbol ) ) {
@@ -382,7 +382,7 @@ string Conversion::convert_infix_to_postfix( string expression ) {
             //printf( "here;%d\n", symbol == "(" );
 
             // Accounting for parenthesis
-            if ( symbol == "(" ) {
+            if ( symbol == "(" && check_top ) {
                 check_top = false;
                 //stack_Class.push( symbol );
                 
@@ -407,7 +407,7 @@ string Conversion::convert_infix_to_postfix( string expression ) {
                 top--;
             }
             
-            if ( top_symbol == "(" && symbol != ")" ) {
+            if ( top_symbol == "(" && symbol != ")" && check_top ) {
                 check_top = false;
                 stack = push( stack, symbol, top );
                 top++;
@@ -543,22 +543,38 @@ int main() {
 Test Expressions:
 passed = The given testcase gave the right output
 
-Infix -
+
+1. Infix -
 1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )
 Postfix - (passed)
 1 2 3 - 4 + 5 ^ * 6 7 * 8 + /
 
-Infix -
+
+2. Infix -
 a = b + c * 10
 Postfix - (passed)
 a b c 10 * + =
 
-Infix -
+
+3. Infix -
 w + f ^ g - h / ( a + b )
 Postfix - (passed)
 w f g ^ + h a b + / -
 
+4. Infix -
+( ( a * b - ( c + d ) ) ) ^ e / ( f * g + h )
+Postfix - (passed)
+a b * c d + - e ^ f g * h + /
 
+5. Infix -
+a - b ^ c + f ^ g / h * g ^ 1
+Postfix - (passed)
+a b c ^ - f g ^ h / g 1 ^ * +
+
+6. Infix -
+( ( a + b ) * ( b + c - d * f ) ) / ( 1 + 2 )
+Postfix - (passed)
+a b + b c + d f * - * 1 2 + /
 
 
 
