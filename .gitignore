@@ -1,9 +1,1 @@
-p1_bubbleSort.exe
-p2_selectionsort.exe
-p3_countingsort.exe
-p4_balanced_bracket_check.exe
-p5_fizzbuzz.exe
-p6_maximum_pairwise_product.exe
-p7_decimal_to_binary.exe
-p8_fibonacci_related_problems.exe
-p11_infix_prefix_postfix_expression_conversion_and_evaluation.exe
+*.exe
