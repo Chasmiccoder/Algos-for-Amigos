@@ -32,6 +32,7 @@ using namespace std;
 vector<string> push( vector<string> vi, string element, int top );
 void print_vector( vector<string> vi, string name_of_vector );
 string string_trim( string str );
+string string_reverse( string str );
 
 
 vector<string> push( vector<string> vi, string element, int top ) {
@@ -124,6 +125,30 @@ string string_trim( string str ) {
     }
 
     string new_str = str.substr( start_point, end_point - start_point + 1 );
+    return new_str;
+}
+
+
+string string_reverse( string str ) {
+    /*
+    Reverses an input string
+
+    Argument -
+    String to be reversed
+
+    Return Value - 
+    Reverse string
+
+    */
+    
+    string new_str = "";
+    int length = str.length();
+
+    for ( int i = length - 1; i >= 0; i++ ) {
+        string character = str.substr( i,1 );
+        new_str += character;
+    }
+
     return new_str;
 }
 
@@ -320,14 +345,35 @@ class Conversion {
             return true;
         }
 
-        string convert_infix_to_postfix( string expression );
-        string convert_infix_to_prefix( string expression );
+        string convert_infix( string expression, string conversion_type );
+
 };
 
 
-string Conversion::convert_infix_to_postfix( string expression ) {
+string Conversion::convert_infix( string expression, string conversion_type ) {
     /*
     This function takes an expression in infix format and returns the postfix form of that expression
+    
+    Infix to Postfix Conversion:
+    ============================
+    We will iterate over the symbols and follow the following rules
+    If an operand is found, it is added to the output
+
+    If an operator is found, it is pushed to the stack if the In-Stack element has lower priority
+
+    Else we will conduct a pop operation that pops the operators until the In-stack element has lower priority, 
+    or the stack becomes empty
+
+    If at the end of symbol parsing, the stack is not empty, we will pop out the elements and add them to the output
+
+    Infix to Prefix Conversion:
+    ===========================
+    Infix to Prefix conversion is similar to Postfix conversion
+    We just need to start from the end of the expression and iterate backwards
+
+    Each time a symbol is to be added to the output, we will append it at the end, 
+    and then to produce the final string, we will reverse it
+    Operator and operand handling is to be done the way it is done with postfix conversion
 
     */
     
@@ -341,7 +387,7 @@ string Conversion::convert_infix_to_postfix( string expression ) {
     int expression_length = expression.length();
     
     // Final output
-    string postfix_expression = "";
+    string new_expression = "";
 
     // Operation Stack which keeps track of the parentheses and the operators
     vector<string> stack;
@@ -352,13 +398,20 @@ string Conversion::convert_infix_to_postfix( string expression ) {
     // Loop variable that keeps track of which symbol is under consideration
     int i = 0;
 
-    while ( i < number_of_symbols ) {
+    bool to_postfix = true;
+
+    if ( conversion_type == "prefix" ) {
+        to_postfix = false;
+        i = number_of_symbols - 1;
+    }
+
+    while ( ( i < number_of_symbols && to_postfix ) || ( i >= 0 && to_postfix == false ) ) {
     
         string symbol = symbols[i];
     
         // If the symbol is a constant or a variable (an operand), send it to the output
         if ( notOperand( symbol ) ) 
-            postfix_expression += " " + symbol;
+            new_expression += " " + symbol;
         
         // The Symbol is an operator or a parenthesis
         else {
@@ -400,8 +453,8 @@ string Conversion::convert_infix_to_postfix( string expression ) {
 
                     stack.pop_back();
                     top--;
-                    postfix_expression += " " + top_symbol;
-                    top_symbol = stack[ top ];    
+                    new_expression += " " + top_symbol;
+                    top_symbol = stack[ top ];
                 }
 
                 // We need to pop once more to remove "("
@@ -440,7 +493,7 @@ string Conversion::convert_infix_to_postfix( string expression ) {
                 
                 stack.pop_back();
                 top--;
-                postfix_expression += " " + to_be_outputted;
+                new_expression += " " + to_be_outputted;
 
                 // If the operation stack is empty, discontinue the pop operation
                 if ( top == -1 ) {
@@ -467,8 +520,10 @@ string Conversion::convert_infix_to_postfix( string expression ) {
         }
 
         // Update loop variable to move on to the next symbol
-        i++;
-        
+        if ( to_postfix )
+            i++;
+        else 
+            i--;
     }
 
     // After parsing all the symbols, push the operation stack's elements to the output
@@ -476,19 +531,20 @@ string Conversion::convert_infix_to_postfix( string expression ) {
         
         string operator_ = stack[ top ];
         stack.pop_back();
-        postfix_expression += " " + operator_;
+        new_expression += " " + operator_;
         top--;
     }
 
     // Remove initial and trailing spaces of the final string
-    postfix_expression = string_trim( postfix_expression );
+    new_expression = string_trim( new_expression );
 
-    return postfix_expression;    
+    // In the case of Infix to Prefix conversion, the actual output will be derived once we reverse the found solution
+    if ( to_postfix == false )
+        new_expression = string_reverse( new_expression );
+
+    return new_expression;    
 }
 
-string Conversion::convert_infix_to_prefix( string expression ) {
-
-}
 
 class Evaluation {
 // Use Hash Maps for input values of variables
