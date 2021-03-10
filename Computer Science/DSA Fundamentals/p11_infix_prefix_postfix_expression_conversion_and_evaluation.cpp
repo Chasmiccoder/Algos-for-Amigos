@@ -284,6 +284,35 @@ void print_vector( vector<string> vi, string name_of_vector ) {
     printf( "------------\n" );
 }
 
+string string_trim( string str ) {
+    
+    int length = str.length();
+    int i = 0;
+    int start_point = 0;
+    while ( i < length ) {
+        string character = str.substr( i,1 );
+        if ( character != " " ) {
+            start_point = i;
+            break;
+        }
+        i++;
+    }
+    
+    i = length-1;
+    int end_point = 0;
+    while ( i >= 0 ) {
+        string character = str.substr( i,1 );
+        if ( character != " " ) {
+            end_point = i;
+            break;
+        }
+        i--;
+    }
+
+    string new_str = str.substr( start_point, end_point - start_point + 1 );
+    return new_str;
+}
+
 string Conversion::convert_infix_to_postfix( string expression ) {
     /*
     A symbol is just the smallest element in the expression
@@ -323,7 +352,7 @@ string Conversion::convert_infix_to_postfix( string expression ) {
 
         
         //cout << "SYmbol: " << symbol << endl;
-        print_vector( stack, "OperationStack" );
+        //print_vector( stack, "OperationStack" );
     
         if ( notOperand( symbol ) ) {
             // If the symbol is a number or a variable, send it to the output
@@ -386,9 +415,9 @@ string Conversion::convert_infix_to_postfix( string expression ) {
 
             int ico_greater_than_iso = precedence( symbol, top_symbol ); // 1 if true
 
-            printf("E:\n");
-            cout << "ICO: " << symbol << " ISO: " << top_symbol << endl;
-            printf( "prec: %d\n", ico_greater_than_iso );
+            //printf("E:\n");
+            //cout << "ICO: " << symbol << " ISO: " << top_symbol << endl;
+            //printf( "prec: %d\n", ico_greater_than_iso );
             
             
             if ( ico_greater_than_iso == 1 && check_top  ) {
@@ -419,17 +448,17 @@ string Conversion::convert_infix_to_postfix( string expression ) {
                 }
                 
                 top_symbol = stack[ top ];
-                printf("SATHP?\n");
+                //printf("SATHP?\n");
                 
 
                 if ( top_symbol == "(" ) { //HANDLE THIS
                     break;
                 }
-                cout << "ICO: " << symbol << " ISO: " << top_symbol << endl;
+                //cout << "ICO: " << symbol << " ISO: " << top_symbol << endl;
                 ico_greater_than_iso = precedence( symbol, top_symbol );
-                printf("Q:%d\n", ico_greater_than_iso);
+                //printf("Q:%d\n", ico_greater_than_iso);
             }
-            printf("D:\n");
+            //printf("D:\n");
             
             if ( check_precedence ) {
                 // The ico element must get pushed at the end of the pop operation
@@ -461,6 +490,8 @@ string Conversion::convert_infix_to_postfix( string expression ) {
         top--;
     }
 
+    postfix_expression = string_trim( postfix_expression );
+
     return postfix_expression;
 
 
@@ -478,13 +509,6 @@ class Evaluation {
 };
 
 
-
-
-
-
-
-
-
 int main() {
 
 /* Implement balanced bracket check as well
@@ -494,8 +518,8 @@ int main() {
     string infix;
     int max_length_of_string = 100;
     printf( "Enter Expression:\n" );
-    //getline( cin, infix ); // Cannot use scanf(), since we want the input string to include spaces
-    infix = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
+    getline( cin, infix ); // Cannot use scanf(), since we want the input string to include spaces
+    //infix = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
 
 
     /*
@@ -510,8 +534,6 @@ int main() {
 
     printf( "Postifix Expression:\n" );
     cout << postfix << "\n";
-    
-
 
 
     return 0;
@@ -519,11 +541,25 @@ int main() {
 
 /*
 Test Expressions:
+passed = The given testcase gave the right output
 
 Infix -
 1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )
-Postfix -
+Postfix - (passed)
 1 2 3 - 4 + 5 ^ * 6 7 * 8 + /
+
+Infix -
+a = b + c * 10
+Postfix - (passed)
+a b c 10 * + =
+
+Infix -
+w + f ^ g - h / ( a + b )
+Postfix - (passed)
+w f g ^ + h a b + / -
+
+
+
 
 
 
