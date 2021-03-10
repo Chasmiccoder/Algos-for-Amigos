@@ -6,6 +6,14 @@ Author: Aryaman Kolhe
 Date: 08-March-2021
 */
 
+/*
+    TO DO:
+    - Create Help menu
+    - Implement balanced bracket check as well
+    - Make the whole thing menu driven
+    - Manually calculate the answer to the sample questions, and cross verify the answers with this program
+*/
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,105 +23,65 @@ Date: 08-March-2021
 
 using namespace std;
 
-class DebuggingTools {
-    public:
-        void print_vector( vector<string> vi, string name_of_vector ) {
-            printf( "Printing Vector: "  );
-            cout << name_of_vector << "\n";
-
-            int size = vi.size();
-            printf( "Size:%d\n", size );
-
-            for ( int i = 0; i < size; i++ ) {
-                cout << vi[i] << endl;
-            }
-            printf( "---\n" );
-        }
-
-};
-
+vector<string> push( vector<string> vi, string element, int top );
 void print_vector( vector<string> vi, string name_of_vector );
+string string_trim( string str );
 
-class Stack {
-    /*
-    Contains the variables and methods required to operate stacks successfully
-    Vars:
-    vector<stack> stack = Keeps track of the stack in consideration
-    int top             = Keeps track of the top of the stack
-    int length          = Keeps track of the size of the stack
-
-    Methods:
-    vector<string> inputStack( vector<string> vi ) = Takes the vector vi and assigns it to the stack 
-    vector<string> outputStack() = Returns the stack vector
-    bool isFull()                = Checks if the stack vector has been filled
-    bool isEmpty()          = Checks if the stack vector is empty
-    string peek()                 = Returns the element at the top of the stack
-    string pop()                  = Returns the element at the top of the stack and decrements top by 1
-    void push( string element )   = Pushes an element into the stack
-    */
+vector<string> push( vector<string> vi, string element, int top ) {
     
-    private:
-        vector<string> stack;
-        int top;
+    if ( vi.empty() ) {
+        vi.push_back( element );
+        return vi;
+    }
+    else if ( top < vi.size() ) {
+        vi.push_back( element );
+    }
     
-    public:
-        Stack() {
-            top = -1;
-        }
-        void inputStack( vector<string> vi ) {
-            stack = vi;
-        }
+    vi[ top+1 ] = element;
+    return vi;
+}
 
-        vector<string> outputStack() {
-            return stack;
-        }
+void print_vector( vector<string> vi, string name_of_vector ) {
+    printf( "Printing Vector: "  );
+    cout << name_of_vector << "\n";
 
-        int outputTop() {
-            return top;
-        }
+    int size = vi.size();
+    printf( "Size:%d\n", size );
 
-        bool isFull() {
-            if ( top < stack.size() - 1 )
-                return false;
-            return true;
-        }
+    for ( int i = 0; i < size; i++ ) {
+        cout << vi[i] << endl;
+    }
+    printf( "------------\n" );
+}
 
-        bool isEmpty() {
-            if ( top <= -1 )
-                return true;
-            return false;
-        }
-
-        string peek() {
-            if ( top <= -1 ) {
-            printf( "Top is negative\n" );
-            return "---";
-            }
-            return stack[top];
-        }
-
-        string pop( int top ) {
-            if ( top <= -1 ) {
-                //printf( "Stack Underflow! No element popped.\n" );
-                return "---";
-            }
+string string_trim( string str ) {
     
-            string top_element = stack[ top ];
-            stack.pop_back();
-            return top_element;
+    int length = str.length();
+    int i = 0;
+    int start_point = 0;
+    while ( i < length ) {
+        string character = str.substr( i,1 );
+        if ( character != " " ) {
+            start_point = i;
+            break;
         }
-
-        void push( string element ) {
-            
-            if ( isFull() ) {
-                stack.push_back( element );
-            }
-            else {
-                stack[ ++top ] = element;
-            }
+        i++;
+    }
+    
+    i = length-1;
+    int end_point = 0;
+    while ( i >= 0 ) {
+        string character = str.substr( i,1 );
+        if ( character != " " ) {
+            end_point = i;
+            break;
         }
-};
+        i--;
+    }
 
+    string new_str = str.substr( start_point, end_point - start_point + 1 );
+    return new_str;
+}
 
 class Conversion {
     /*
@@ -257,61 +225,6 @@ class Conversion {
 
 };
 
-vector<string> push( vector<string> vi, string element, int top ) {
-    
-    if ( vi.empty() ) {
-        vi.push_back( element );
-        return vi;
-    }
-    else if ( top < vi.size() ) {
-        vi.push_back( element );
-    }
-    
-    vi[ top+1 ] = element;
-    return vi;
-}
-
-void print_vector( vector<string> vi, string name_of_vector ) {
-    printf( "Printing Vector: "  );
-    cout << name_of_vector << "\n";
-
-    int size = vi.size();
-    printf( "Size:%d\n", size );
-
-    for ( int i = 0; i < size; i++ ) {
-        cout << vi[i] << endl;
-    }
-    printf( "------------\n" );
-}
-
-string string_trim( string str ) {
-    
-    int length = str.length();
-    int i = 0;
-    int start_point = 0;
-    while ( i < length ) {
-        string character = str.substr( i,1 );
-        if ( character != " " ) {
-            start_point = i;
-            break;
-        }
-        i++;
-    }
-    
-    i = length-1;
-    int end_point = 0;
-    while ( i >= 0 ) {
-        string character = str.substr( i,1 );
-        if ( character != " " ) {
-            end_point = i;
-            break;
-        }
-        i--;
-    }
-
-    string new_str = str.substr( start_point, end_point - start_point + 1 );
-    return new_str;
-}
 
 string Conversion::convert_infix_to_postfix( string expression ) {
     /*
@@ -492,16 +405,7 @@ string Conversion::convert_infix_to_postfix( string expression ) {
 
     postfix_expression = string_trim( postfix_expression );
 
-    return postfix_expression;
-
-
-        /* Big dilemma:
-        Does using a class dynamically update it's values? 
-        For example, after assigning top, does top automatically change once we push and pop using
-        stack_Class?
-        If not, then we have to account for it at each update of the stack
-        */
-    
+    return postfix_expression;    
 }
 
 class Evaluation {
@@ -511,23 +415,12 @@ class Evaluation {
 
 int main() {
 
-/* Implement balanced bracket check as well
-*/
-
 
     string infix;
     int max_length_of_string = 100;
     printf( "Enter Expression:\n" );
     getline( cin, infix ); // Cannot use scanf(), since we want the input string to include spaces
     //infix = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
-
-
-    /*
-    TO DO:
-    Create Help menu
-    Make the whole thing menu driven
-    Manually calculate the answer to Sir's questions, and cross verify the answers with this program
-    */
     
     Conversion convert_Class;
     string postfix = convert_Class.convert_infix_to_postfix( infix );
