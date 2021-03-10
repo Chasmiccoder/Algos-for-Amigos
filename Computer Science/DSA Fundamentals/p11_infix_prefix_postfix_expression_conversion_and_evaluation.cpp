@@ -355,11 +355,8 @@ string Conversion::convert_infix_to_postfix( string expression ) {
     while ( i < number_of_symbols ) {
     
         string symbol = symbols[i];
-///////////////////////////////////////////////////////////////////////////////////
-        //cout << "Symbol " << symbol << endl;
-        //print_vector( symbols, "OperationStack" );
     
-        // If the symbol is a constatnt or a variable (an operand), send it to the output
+        // If the symbol is a constant or a variable (an operand), send it to the output
         if ( notOperand( symbol ) ) 
             postfix_expression += " " + symbol;
         
@@ -378,7 +375,7 @@ string Conversion::convert_infix_to_postfix( string expression ) {
 
             // If the operation stack is empty, push the operator into the stack
             if ( top == -1 ) {
-           
+            
                 stack = push( stack, symbol, top );
                 top++;        
                 execute_operation = false;
@@ -487,6 +484,10 @@ string Conversion::convert_infix_to_postfix( string expression ) {
     postfix_expression = string_trim( postfix_expression );
 
     return postfix_expression;    
+}
+
+string Conversion::convert_infix_to_prefix( string expression ) {
+
 }
 
 class Evaluation {
