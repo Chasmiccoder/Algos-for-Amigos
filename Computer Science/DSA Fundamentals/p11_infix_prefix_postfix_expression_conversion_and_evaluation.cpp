@@ -555,7 +555,7 @@ a b * c d + - e ^ f g * h + /
 
 5. Infix -
 a - b ^ c + f ^ g / h * g ^ 1
-Postfix - (passed)
+Postfix - (passed) 
 a b c ^ - f g ^ h / g 1 ^ * +
 
 6. Infix -
