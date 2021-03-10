@@ -9,6 +9,7 @@ Date: 08-March-2021
 /*
     TO DO:
     - Create Help menu
+    - Create a testing suite with known inputs and outputs
     - Implement balanced bracket check as well
     - Make the whole thing menu driven
     - Manually calculate the answer to the sample questions, and cross verify the answers with this program
@@ -270,69 +271,71 @@ class Conversion {
         vector<string> getSymbols( string expression ) {
             /*
             Breaks the input expression into its fundamental symbols (variables, constants and operators)
+            A symbol is just the smallest element in the expression
+            Introducing symbols to account for variables and integers that have more than one characters
             
             */
             
+            int start_index = 0;
             int expression_length = expression.length();
             vector<string> symbols;
             
-            int start_index = 0;
             for ( int i = 0; i < expression_length; i++ ) {
 
                 string character = expression.substr( i,1 );
 
-                // Store a symbol if we encounter a space
+                // Store the symbol if we encounter a space
                 if ( character == " " ) {
                     
-                    string one_symbol = expression.substr( start_index, i-start_index );
-
-                    //cout << "Symbol: " << one_symbol << endl;
-                    
+                    string one_symbol = expression.substr( start_index, i-start_index );                    
                     symbols.push_back( one_symbol );
                     start_index = i+1;
                 }
 
                 // Store the last symbol if we encounter the end of the expression
                 else if ( i == expression_length - 1 ) {
+
                     string one_symbol = expression.substr( start_index, i-start_index+1 );
                     symbols.push_back( one_symbol );
                 }
-
-            } 
+            }
 
             return symbols;
         }
 
         bool notOperand( string symbol ) {
+            /*
+            Returns true if the symbol is an operand
+            Returns false if the symbol is either an operator, or a bracket
+            */
+            
             for ( int i = 0; i < number_of_operators; i++ ) {
                 if ( vi_operator[i].first.first == symbol ) 
                     return false;
             }
-            if ( symbol == "(" || symbol == ")" ) {
+
+            if ( symbol == "(" || symbol == ")" ) 
                 return false;
-            }
+            
             return true;
         }
 
         string convert_infix_to_postfix( string expression );
         string convert_infix_to_prefix( string expression );
-
 };
 
 
 string Conversion::convert_infix_to_postfix( string expression ) {
     /*
-    A symbol is just the smallest element in the expression
-    Introducing symbols to account for variables and integers that have more than one characters
+    This function takes an expression in infix format and returns the postfix form of that expression
+
     */
     
-
-    // Vector with all Symbols to be parsed
+    // Vector that contains all the symbols to be parsed
     vector<string> symbols = getSymbols( expression );
     
     // Number of symbols to be parsed
     int number_of_symbols = symbols.size();
-
 
     // Number of characters in the expression
     int expression_length = expression.length();
@@ -340,163 +343,147 @@ string Conversion::convert_infix_to_postfix( string expression ) {
     // Final output
     string postfix_expression = "";
 
-    // Operation Stack
-    //Stack stack_Class;
-    vector<string> stack; // Operation Stack
-    //int top = -1;
-
-    //vector<string> stack = stack_Class.outputStack();
-    //int top = stack_Class.outputTop(); //This is not working, top is not getting updated dynamically
-    int top = -1;
+    // Operation Stack which keeps track of the parentheses and the operators
+    vector<string> stack;
+    
+    // top pointer that needs to be updated after each push and pop operation
+    int top = -1; 
 
     // Loop variable that keeps track of which symbol is under consideration
     int i = 0;
+
     while ( i < number_of_symbols ) {
     
-        
-        
         string symbol = symbols[i];
-
-        // THESE TWO LINES ARE VITAL FOR DEBUGGIN'
-        //cout << "Symbol: " << symbol << endl;
-        //print_vector( stack, "OperationStack" );
+///////////////////////////////////////////////////////////////////////////////////
+        //cout << "Symbol " << symbol << endl;
+        //print_vector( symbols, "OperationStack" );
     
-        if ( notOperand( symbol ) ) {
-            // If the symbol is a number or a variable, send it to the output
+        // If the symbol is a constatnt or a variable (an operand), send it to the output
+        if ( notOperand( symbol ) ) 
             postfix_expression += " " + symbol;
-        }
+        
+        // The Symbol is an operator or a parenthesis
         else {
             
-            
-            bool check_top = true; // give this var a meaningful name
-            bool check_precedence = false;
+            // Keeps track of whether an element has been pushed into the stack or not. Turns false if no more operations are to take place
+            // This var is essential to prevent duplicates
+            bool execute_operation = true;
+
+            // Turns true if the continuous pop operation takes place
+            bool if_pop_operation = false;
+
+            // Keeps track of the In-stack Operator
             string top_symbol = "";
+
+            // If the operation stack is empty, push the operator into the stack
             if ( top == -1 ) {
-                // If there is nothing in the operation stack, push the operator into the stack
-                
-                //stack_Class.push( symbol );   
+           
                 stack = push( stack, symbol, top );
-                top++;
-                
-                
-                check_top = false;
+                top++;        
+                execute_operation = false;
             }
+
+            // If the operation stack is not empty, get the In-stack operator
             else {
                 top_symbol = stack[ top ];
             }
             
-            //print_vector( stack, "OperationStack" );
-            //printf( "here;%d\n", symbol == "(" );
-
-            // Accounting for parenthesis
-            if ( symbol == "(" && check_top ) {
-                check_top = false;
-                //stack_Class.push( symbol );
-                
+            // If an open parenthesis is seen, push it into the stack
+            if ( symbol == "(" && execute_operation ) {
+                 
                 stack = push( stack, symbol, top );
                 top++;
-                
+                execute_operation = false;
             }
             
-            
+            // If a closed parenthesis is seen, perform pop operation until an open parenthesis is encountered
             if ( symbol == ")" ) {
-                check_top = false;
                 while ( top_symbol != "(" ) {
 
-                    string operator_ = stack[ top ];
                     stack.pop_back();
                     top--;
-                    postfix_expression += " " + operator_;
-                    top_symbol = stack[ top ];
+                    postfix_expression += " " + top_symbol;
+                    top_symbol = stack[ top ];    
                 }
+
                 // We need to pop once more to remove "("
                 stack.pop_back();
                 top--;
+                execute_operation = false;
             }
             
-            if ( top_symbol == "(" && symbol != ")" && check_top ) {
-                check_top = false;
-                stack = push( stack, symbol, top );
-                top++;
-            }
-
-            bool ico_greater_than_iso = precedence( symbol, top_symbol ); // 1 if true
-
-            //printf("E:\n");
-            //cout << "ICO: " << symbol << " ISO: " << top_symbol << endl;
-            //printf( "prec: %d\n", ico_greater_than_iso );
-            
-            
-            if ( ico_greater_than_iso == 1 && check_top  ) {
-                check_top = false;
-                stack = push( stack, symbol, top );
-                top++;
-            }
-            
-
-            // This loop will pop elements of the operation stack until precedence of ICO > ISO
-            while ( check_top && ico_greater_than_iso == 0 )  {
-                //cout << "ICO: " << symbol << " ISO: " << top_symbol << endl;
-                // pop operation
-                check_precedence = true;
-
+            // If the In-stack operator is an open parenthesis, push the Incoming operator if it is not a closing parenthesis
+            if ( top_symbol == "(" && symbol != ")" && execute_operation ) {
                 
+                stack = push( stack, symbol, top );
+                top++;
+                execute_operation = false;
+            }
+
+            // If ICO > ISO, this var is true
+            bool ico_greater_than_iso = precedence( symbol, top_symbol );
+            
+            // If ICO > ISO, push the ICO into the operation stack
+            if ( ico_greater_than_iso && execute_operation  ) {
+                
+                stack = push( stack, symbol, top );
+                top++;
+                execute_operation = false;
+            }
+
+            // If ICO < ISO, perform continuous pop operation until ICO > ISO or the stack is empty
+            while ( execute_operation && ico_greater_than_iso == false )  {
+
+                // Setting this to be true, so that the ICO can get pushed into the stack at the end of this continuous pop operation
+                if_pop_operation = true;
                 
                 // To be, or not to be?
                 string to_be_outputted = stack[ top ];
                 
                 stack.pop_back();
-                
                 top--;
                 postfix_expression += " " + to_be_outputted;
 
+                // If the operation stack is empty, discontinue the pop operation
                 if ( top == -1 ) {
                     break;
                 }
                 
+                // Update the In-stack operator after one pop
                 top_symbol = stack[ top ];
-                //printf("SATHP?\n");
-                
 
-                if ( top_symbol == "(" ) { //HANDLE THIS
+                // If the In-stack operator is an opening parenthesis, discontinue pop operation
+                if ( top_symbol == "(" ) {
                     break;
                 }
-                //cout << "ICO: " << symbol << " ISO: " << top_symbol << endl;
+
+                // Recalculate precedence between ICO and the new ISO
                 ico_greater_than_iso = precedence( symbol, top_symbol );
-                //printf("Q:%d\n", ico_greater_than_iso);
             }
-            //printf("D:\n");
             
-            if ( check_precedence ) {
-                // The ico element must get pushed at the end of the pop operation
+            // If the continuous pop operation was executed for the operands, push the Incoming operator into the stack
+            if ( if_pop_operation ) {
                 stack = push( stack, symbol, top );
                 top++;
-            }
-
-            
-            
+            }            
         }
 
+        // Update loop variable to move on to the next symbol
         i++;
         
     }
-    
-    
-    //printf( "top: %d\n", top );
 
-    // After parsing all the symbols we can push the operation stack's elements to the output
+    // After parsing all the symbols, push the operation stack's elements to the output
     while ( top > -1 ) {
-        //sprintf( "ENTE\n" );
         
         string operator_ = stack[ top ];
         stack.pop_back();
-
-        //printf( "OPERATOR:" );
-        //cout << operator_ << endl;
         postfix_expression += " " + operator_;
         top--;
     }
 
+    // Remove initial and trailing spaces of the final string
     postfix_expression = string_trim( postfix_expression );
 
     return postfix_expression;    
@@ -509,12 +496,10 @@ class Evaluation {
 
 int main() {
 
-
     string infix;
     int max_length_of_string = 100;
     printf( "Enter Expression:\n" );
     getline( cin, infix ); // Cannot use scanf(), since we want the input string to include spaces
-    //infix = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
     
     Conversion convert_Class;
     string postfix = convert_Class.convert_infix_to_postfix( infix );
