@@ -14,19 +14,24 @@ Date: 08-March-2021
     - Manually calculate the answer to the sample questions, and cross verify the answers with this program
 */
 
+
 #include <iostream>
 #include <string>
 #include <vector>
+
 
 // Macros that make defining the operator vector easy
 #define PB push_back
 #define MP make_pair
 
+
 using namespace std;
+
 
 vector<string> push( vector<string> vi, string element, int top );
 void print_vector( vector<string> vi, string name_of_vector );
 string string_trim( string str );
+
 
 vector<string> push( vector<string> vi, string element, int top ) {
     /*
@@ -55,6 +60,7 @@ vector<string> push( vector<string> vi, string element, int top ) {
     return vi;
 }
 
+
 void print_vector( vector<string> vi, string name_of_vector ) {
     /*
     Function prints a vector in sequence
@@ -77,6 +83,7 @@ void print_vector( vector<string> vi, string name_of_vector ) {
     printf( "------------\n" );
 }
 
+
 string string_trim( string str ) {
     /*
     Function returns a string after trimming it for whitespaces at the beginning and the end
@@ -92,7 +99,9 @@ string string_trim( string str ) {
     int length = str.length();
     int i = 0;
     int start_point = 0;
+
     while ( i < length ) {
+
         string character = str.substr( i,1 );
         if ( character != " " ) {
             start_point = i;
@@ -103,6 +112,7 @@ string string_trim( string str ) {
     
     i = length-1;
     int end_point = 0;
+
     while ( i >= 0 ) {
         string character = str.substr( i,1 );
         if ( character != " " ) {
@@ -115,6 +125,7 @@ string string_trim( string str ) {
     string new_str = str.substr( start_point, end_point - start_point + 1 );
     return new_str;
 }
+
 
 class Conversion {
     /*
@@ -191,26 +202,31 @@ class Conversion {
             number_of_operators = vi_operator.size();
         }
 
+
         vector<int> getPriorityAndAssociativity( string operator_ ) {
             /*
-            Returns the priority index (lesser the index, more the priority), and the associativity 
-            of an operator. Returns -1 if the operator does not exist in the operator vector.
+            Returns the priority index (lesser the index, more the priority), and the associativity of an operator 
+            Returns -1 if the operator does not exist in the operator vector.
+
             */
             
             for ( int i = 0; i < number_of_operators; i++ ) {
+
                 if ( vi_operator[i].first.first == operator_ ) {
+
                     vector<int> vi;
-                    vi.push_back( vi_operator[i].second ); //FIX ASSOCIATIVIT!>!>!??????????????????
-                    if ( vi_operator[i].first.second == "left" ) {
+                    vi.push_back( vi_operator[i].second );
+
+                    if ( vi_operator[i].first.second == "left" ) 
                         vi.push_back( 1 );
-                    }
-                    else {
+                    
+                    else 
                         vi.push_back( 0 ); // Right Associativity
-                    }
+                    
                     return vi;
                 }
-
             }
+
             vector<int> vi;
             vi.push_back( -1 );
             vi.push_back( -1 );
@@ -219,44 +235,54 @@ class Conversion {
 
 
         bool precedence( string ICO, string ISO ) {
-            // Returns 0 if ico < iso. 1 if ico > iso. If they have the same priority, it checks
-            // for associativity. Basically, if we want to push to the stack, 1 is returned. 
-            // For the continuous pop operation, 0 is returned.
+            /*
+            Returns true if ICO > ISO
+            If they have the same priority, it checks for associativity
+            Basically, if we want to push to the stack, true is returned
+            For the continuous pop operation, false is returned.
+
+            */
+
             vector<int> ico_precedence = getPriorityAndAssociativity( ICO );
             vector<int> iso_precedence = getPriorityAndAssociativity( ISO );
 
-            //cout << "E: " << ICO << " " << ISO << endl;
-
             if ( ico_precedence[0] < iso_precedence[0] ) {
-                // Lesser the index of precedence, greater the priority
+                // ICO > ISO. Lesser the index of precedence, greater the priority
                 return true;
             }
-            // if |a| = 0, we can get either no solution, or infinitely many solutions
+            
             else if ( ico_precedence[0] == iso_precedence[0] ) {
-                if ( ico_precedence[1] == 1  ) { 
-                    return false; // Left associativity, which means that ico < iso, so we want to perform the pop operation
-                }                // FIX THE LOGIC IN THESE COMMENT LINES!
-                return true; // Right associativity, which means that ico > iso, so we want to push it into the stack
+
+                // Left associativity
+                if ( ico_precedence[1] == 1  ) 
+                    return false; 
+                
+                // Right associativity
+                return true; 
             }
             else {
-                
+                // ICO < ISO
                 return false;
             }
         }
 
+
         vector<string> getSymbols( string expression ) {
-            // Breaks the input expression into its fundamental symbols
+            /*
+            Breaks the input expression into its fundamental symbols (variables, constants and operators)
+            
+            */
+
             int expression_length = expression.length();
             vector<string> symbols;
             
             int start_index = 0;
             for ( int i = 0; i < expression_length; i++ ) {
+
                 string character = expression.substr( i,1 );
-                //cout << "Character: " << character << endl;
 
                 // Store a symbol if we encounter a space
                 if ( character == " " ) {
-                    
                     
                     string one_symbol = expression.substr( start_index, i-start_index );
 
