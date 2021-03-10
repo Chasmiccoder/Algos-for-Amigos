@@ -18,6 +18,7 @@ Date: 08-March-2021
 #include <string>
 #include <vector>
 
+// Macros that make defining the operator vector easy
 #define PB push_back
 #define MP make_pair
 
@@ -28,6 +29,19 @@ void print_vector( vector<string> vi, string name_of_vector );
 string string_trim( string str );
 
 vector<string> push( vector<string> vi, string element, int top ) {
+    /*
+    Function performs push operation on a stack
+    Note! Top element must be incremented after using this separately
+    
+    Arguments -
+    vector<string> vi = Vector to which push should be performed
+    string element    = Element to be pushed
+    int top           = Top pointer of stack vi
+
+    Return Value -
+    vector<string> vi = Stack after push is performed
+
+    */
     
     if ( vi.empty() ) {
         vi.push_back( element );
@@ -42,6 +56,15 @@ vector<string> push( vector<string> vi, string element, int top ) {
 }
 
 void print_vector( vector<string> vi, string name_of_vector ) {
+    /*
+    Function prints a vector in sequence
+    Mainly used for debugging
+
+    Arguments -
+    vector<string> vi     = Vector to be printed
+    string name_of_vector = Name of the vector to be displayed
+
+    */
     printf( "Printing Vector: "  );
     cout << name_of_vector << "\n";
 
@@ -55,6 +78,16 @@ void print_vector( vector<string> vi, string name_of_vector ) {
 }
 
 string string_trim( string str ) {
+    /*
+    Function returns a string after trimming it for whitespaces at the beginning and the end
+
+    Argument -
+    string str = String to be trimmed
+
+    Return Value -
+    string str = String after trimming
+
+    */
     
     int length = str.length();
     int i = 0;
@@ -87,27 +120,62 @@ class Conversion {
     /*
     Contains the variables and methods required to convert a string expression given in infix format
     to either prefix or postfix format
-    Vars:
+
+    Vars -
+    vector< pair< pair< string, string >, int > > vi_operator = Vector which contains the operators along with their details
+    int number_of_operators = Contains the size of the operator vector
+
+    vi_operator is a string vector of a pair of pairs.
+    For the ith element,
+    vi_operator[i].first.first gives us a string containing the operator under consideration
+    vi_operator[i].first.second gives us a string that specifies its associativity
+    vi_operator[i].second gives us an integer corresponding to the precedence of the operator
+    
+
+    How precedence is calculated - ( ICO = Incoming Operator, ISO = In-stack Operator )
+    In this implementation, lower the integer, more the priority of the operator
+    For example, if ICO > ISO then, the integer of the ICO operator is lesser than that of the ISO operator i.e,
+    ico_precedence < iso_precedence 
+    
+    If ICO > ISO, we want to return 1, which will push the ICO into the operation stack
+    If ICO < ISO, we want to return 0, which will perform a continuous pop operation until either the operation stack is empty, or ICO > ISO
+    If ICO = ISO, we check for the associativity. 
+
+    If the operators follow left associativity, we perform the continuous pop operation
+    If the operators follow right associativity, we push ICO into the operation stack
+    For example, if the operators follow left associativity, for the expression:
+    A (ISO) B (ICO) C, we want to execute A (ISO) B before.
 
 
-    Methods:
 
+    Methods -
+    Conversion()
+    Initializes the operators (along with their details), and calculates the number of operators
 
-    //////Inherited Methods Used form the Stack class:
+    vector<int> getPriorityAndAssociativity( string operator_ )
+    Returns the priority index and associativity of an operator
 
+    bool precedence( string ICO, string ISO )
+    Compares the precedence of both ICO and ISO. Returns true if ICO > ISO
 
+    vector<string> getSymbols( string expression )
+    Goes through an expression and breaks it into fundamental symbols (variables and operators)
+
+    bool notOperand( string symbol )
+    Returns true if a symbol is an operand (variable or constant)
+
+    string convert_infix_to_postfix( string expression )
+    Returns the postfix format of an expression in infix format
+
+    string convert_infix_to_prefix( string expression );
+    Returns the prefix format of an expression in infix format
 
     */
     
     private:
+        vector< pair< pair< string, string >, int > > vi_operator; 
         int number_of_operators;
-        vector< pair< pair< string, string >, int > > vi_operator; // operator vector
-        // vi_operator.first.first gives us the operator
-        // vi_operator.first.second gives us the associativity
-        // vi_operator.second gives us the precedence
         
-        
-    
     public:
         Conversion() {
             
@@ -124,8 +192,10 @@ class Conversion {
         }
 
         vector<int> getPriorityAndAssociativity( string operator_ ) {
-            // Returns the priority index (lesser the index, more the priority), and the associativity 
-            // of an operator. Returns -1 if the operator does not exist in the operator vector.
+            /*
+            Returns the priority index (lesser the index, more the priority), and the associativity 
+            of an operator. Returns -1 if the operator does not exist in the operator vector.
+            */
             
             for ( int i = 0; i < number_of_operators; i++ ) {
                 if ( vi_operator[i].first.first == operator_ ) {
@@ -148,7 +218,7 @@ class Conversion {
         }
 
 
-        int precedence( string ICO, string ISO ) {
+        bool precedence( string ICO, string ISO ) {
             // Returns 0 if ico < iso. 1 if ico > iso. If they have the same priority, it checks
             // for associativity. Basically, if we want to push to the stack, 1 is returned. 
             // For the continuous pop operation, 0 is returned.
@@ -159,22 +229,22 @@ class Conversion {
 
             if ( ico_precedence[0] < iso_precedence[0] ) {
                 // Lesser the index of precedence, greater the priority
-                return 1;
+                return true;
             }
             // if |a| = 0, we can get either no solution, or infinitely many solutions
             else if ( ico_precedence[0] == iso_precedence[0] ) {
                 if ( ico_precedence[1] == 1  ) { 
-                    return 0; // Left associativity, which means that ico < iso, so we want to perform the pop operation
+                    return false; // Left associativity, which means that ico < iso, so we want to perform the pop operation
                 }                // FIX THE LOGIC IN THESE COMMENT LINES!
-                return 1; // Right associativity, which means that ico > iso, so we want to push it into the stack
+                return true; // Right associativity, which means that ico > iso, so we want to push it into the stack
             }
             else {
                 
-                return 0;
+                return false;
             }
         }
 
-        vector<string> getSymbols( string expression ) { //*** = Seems okay for now
+        vector<string> getSymbols( string expression ) {
             // Breaks the input expression into its fundamental symbols
             int expression_length = expression.length();
             vector<string> symbols;
@@ -326,7 +396,7 @@ string Conversion::convert_infix_to_postfix( string expression ) {
                 top++;
             }
 
-            int ico_greater_than_iso = precedence( symbol, top_symbol ); // 1 if true
+            bool ico_greater_than_iso = precedence( symbol, top_symbol ); // 1 if true
 
             //printf("E:\n");
             //cout << "ICO: " << symbol << " ISO: " << top_symbol << endl;
