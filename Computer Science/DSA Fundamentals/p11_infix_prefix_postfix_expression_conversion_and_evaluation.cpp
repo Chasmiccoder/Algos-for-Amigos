@@ -272,7 +272,7 @@ class Conversion {
             Breaks the input expression into its fundamental symbols (variables, constants and operators)
             
             */
-
+            
             int expression_length = expression.length();
             vector<string> symbols;
             
@@ -295,9 +295,7 @@ class Conversion {
                 // Store the last symbol if we encounter the end of the expression
                 else if ( i == expression_length - 1 ) {
                     string one_symbol = expression.substr( start_index, i-start_index+1 );
-                    //cout << "Symbol: " << one_symbol << endl;
                     symbols.push_back( one_symbol );
-
                 }
 
             } 
