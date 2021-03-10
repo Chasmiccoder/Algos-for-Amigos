@@ -3,7 +3,7 @@ Program to Convert Infix expressions to their Postfix or Prefix form, and to eva
 the Postfix and Prefix expressions.
 
 Author: Aryaman Kolhe
-Date: 08-March-2021
+Start Date: 08-March-2021
 */
 
 /*
@@ -33,6 +33,7 @@ vector<string> push( vector<string> vi, string element, int top );
 void print_vector( vector<string> vi, string name_of_vector );
 string string_trim( string str );
 string string_reverse( string str );
+string string_swap_parentheses( string str );
 
 
 vector<string> push( vector<string> vi, string element, int top ) {
@@ -144,8 +145,39 @@ string string_reverse( string str ) {
     string new_str = "";
     int length = str.length();
 
-    for ( int i = length - 1; i >= 0; i++ ) {
+    for ( int i = length - 1; i >= 0; i-- ) {
+        
         string character = str.substr( i,1 );
+        new_str += character;
+    }
+    return new_str;
+}
+
+
+string string_swap_parentheses( string str ) {
+    /*
+    Replaces all instances of "(" with ")" and vice versa in a string
+    Super useful for prefix conversion
+
+    Argument - 
+    String for which parentheses are to be swapped
+
+    Return Value -
+    String after swapping the parentheses
+
+    */
+    
+    string new_str = "";
+    int length = str.length();
+
+    for ( int i = 0; i < length; i++ ) {
+        string character = str.substr( i,1 );
+
+        if ( character == "(" ) 
+            character = ")";
+        else if ( character == ")" ) 
+            character = "(";
+        
         new_str += character;
     }
 
@@ -346,13 +378,13 @@ class Conversion {
         }
 
         string convert_infix( string expression, string conversion_type );
-
 };
 
 
 string Conversion::convert_infix( string expression, string conversion_type ) {
     /*
     This function takes an expression in infix format and returns the postfix form of that expression
+    All parentheses handling is done in this function
     
     Infix to Postfix Conversion:
     ============================
@@ -374,9 +406,16 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
     Each time a symbol is to be added to the output, we will append it at the end, 
     and then to produce the final string, we will reverse it
     Operator and operand handling is to be done the way it is done with postfix conversion
-
-    */
     
+    16-06
+    */
+
+
+    // Instead of changing the entire parentheses handling section, we can just swap "(" and ")" in a string, to make evaluations easier
+    if ( conversion_type == "prefix" ) {
+        expression = string_swap_parentheses( expression );
+    }
+        
     // Vector that contains all the symbols to be parsed
     vector<string> symbols = getSymbols( expression );
     
@@ -393,7 +432,7 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
     vector<string> stack;
     
     // top pointer that needs to be updated after each push and pop operation
-    int top = -1; 
+    int top = -1;
 
     // Loop variable that keeps track of which symbol is under consideration
     int i = 0;
@@ -401,6 +440,7 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
     bool to_postfix = true;
 
     if ( conversion_type == "prefix" ) {
+        
         to_postfix = false;
         i = number_of_symbols - 1;
     }
@@ -534,9 +574,11 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
         new_expression += " " + operator_;
         top--;
     }
+    
 
     // Remove initial and trailing spaces of the final string
     new_expression = string_trim( new_expression );
+    
 
     // In the case of Infix to Prefix conversion, the actual output will be derived once we reverse the found solution
     if ( to_postfix == false )
@@ -553,16 +595,29 @@ class Evaluation {
 
 int main() {
 
+    /*
+    ADJUST string_reverse() in such a way that the symbols themselves do not get reversed.
+    For example, 10 should not become 01
+    Duh!
+    */
+    
+
     string infix;
     int max_length_of_string = 100;
     printf( "Enter Expression:\n" );
-    getline( cin, infix ); // Cannot use scanf(), since we want the input string to include spaces
+
+    // Cannot use scanf(), since we want the input string to include spaces
+    getline( cin, infix ); 
     
     Conversion convert_Class;
-    string postfix = convert_Class.convert_infix_to_postfix( infix );
 
+    string postfix = convert_Class.convert_infix( infix, "postfix" );
     printf( "Postifix Expression:\n" );
     cout << postfix << "\n";
+
+    string prefix  = convert_Class.convert_infix( infix, "prefix" );
+    printf( "Prefix Expression:\n" );
+    cout << prefix << "\n";
 
 
     return 0;
@@ -577,36 +632,47 @@ passed = The given testcase gave the right output
 1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )
 Postfix - (passed)
 1 2 3 - 4 + 5 ^ * 6 7 * 8 + /
+Prefix - (passed)
+* 1 / ^ - 2 + 3 4 5 + * 6 7 8
 
 
 2. Infix -
 a = b + c * 10
 Postfix - (passed)
 a b c 10 * + =
+Prefix - (not passed)
 
 
 3. Infix -
 w + f ^ g - h / ( a + b )
 Postfix - (passed)
 w f g ^ + h a b + / -
+Prefix - (passed)
++ w - ^ f g / h + a b
+
 
 4. Infix -
 ( ( a * b - ( c + d ) ) ) ^ e / ( f * g + h )
 Postfix - (passed)
 a b * c d + - e ^ f g * h + /
+Prefix - (passed)
+/ ^ - * a b + c d e + * f g h
+
 
 5. Infix -
 a - b ^ c + f ^ g / h * g ^ 1
 Postfix - (passed) 
 a b c ^ - f g ^ h / g 1 ^ * +
+Prefix - (passed)
+- a + ^ b c / ^ f g * h ^ g 1
+
 
 6. Infix -
 ( ( a + b ) * ( b + c - d * f ) ) / ( 1 + 2 )
 Postfix - (passed)
 a b + b c + d f * - * 1 2 + /
-
-
-
+Prefix - (passed)
+/ * + a b + b - c * d f + 1 2
 
 
 */
