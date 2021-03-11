@@ -12,7 +12,6 @@ Start Date: 08-March-2021
     - Create a testing suite with known inputs and outputs
     - Implement balanced bracket check as well
     - Make the whole thing menu driven
-    - Manually calculate the answer to the sample questions, and cross verify the answers with this program
 */
 
 
@@ -216,7 +215,6 @@ class Conversion {
     If the operators follow right associativity, we push ICO into the operation stack
     For example, if the operators follow left associativity, for the expression:
     A (ISO) B (ICO) C, we want to execute A (ISO) B before.
-
 
 
     Methods -
@@ -594,23 +592,146 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
 
 class Evaluation {
 // Use Hash Maps for input values of variables
+// Derive some useful functions from Conversion using inheritance
 };
 
 
-int main() {
+class UserInterface {
+    private:
+        int tmp;
+    public:
+        void welcome() {
+            printf( "\nWelcome to the Expression Calculator!\n\n" );
+
+        }
+
+        void help_menu() {
+            printf( "Available Operations:\n\n" );
+            printf( "1 - Convert Infix Expression to Prefix Form\n" );
+            printf( "2 - Convert Infix Expression to Postfix Form\n" );
+            printf( "3 - Convert Infix Expression to both Prefix and Postfix Forms\n" );
+            printf( "4 - Evaluate an Infix Expression\n" );
+            printf( "5 - Evaluate a Prefix Expression\n" );
+            printf( "6 - Evaluate a Postfix Expression\n\n" );
+
+            printf( "7 - Print the Instructions\n" );
+            printf( "0 - Terminate the program\n\n" );
+
+        }
+
+        void instructions() {
+            printf( "Instructions on how to use the program:\n\n" );
+            printf( "Please enter the expressions in the following format -\n" );
+            printf( "There should be a space between each element of the expression.\n" );
+            printf( "For example, there should be a space between the operators and the operands.\n" );
+            printf( "Variables must use alphabetic characters only. Constants like 101, 24 can be used.\n" );
+            printf( "Example of valid Infix Expression:\n( ( a * b - ( c + d ) ) ) ^ e / ( f * g + h )\n\n" );
+            
+        }
+
+        void exit_interface() {
+            printf( "\n----------------------------------------------\n" );
+            printf( "Thank you for using the Expression Calculator!\n\n" );
+        }
+
+        void main_loop();
+
+};
+
+
+void UserInterface::main_loop() {
+
+    int control = 1;
+    Conversion convert_Class;
+    
+    welcome();
+    instructions();
+    help_menu();
 
     /*
-    ADJUST string_reverse() in such a way that the symbols themselves do not get reversed.
-    For example, 10 should not become 01
-    Duh!
-    */
-    
+    printf( "Enter choice of integer: " );
+    scanf( "%d", &control );
+    printf( "\n" );
 
+    if ( control == 0 ) {
+        exit_interface();
+    }
+    */
+
+    while ( control != 0 ) {
+
+        printf( "Enter choice of integer: " );
+        scanf( "%d", &control );
+        printf( "\n" );
+        if ( control == 1 ) {
+            string infix_expression;
+            printf( "Enter the expression in Infix format:\n" );
+            cin.ignore();
+            getline( cin, infix_expression );
+            printf( "\n" );
+
+            string prefix_expression = convert_Class.convert_infix( infix_expression, "prefix" );
+            printf( "Prefix Form:\n" );
+            cout << prefix_expression << endl;
+
+            printf( "\n" );
+        }
+
+        else if ( control == 2 ) {
+            string infix_expression;
+            printf( "Enter the expression in Infix format:\n" );
+
+            // This line is necessary to get rid of all the extra characters before getline()
+            cin.ignore();
+            getline( cin, infix_expression );
+            printf( "\n" );
+
+            string postfix_expression = convert_Class.convert_infix( infix_expression, "postfix" );
+            printf( "Postfix Form:\n" );
+            cout << postfix_expression << endl;
+
+            printf( "\n" );
+        }
+
+        else if ( control == 3 ) {
+            string infix_expression;
+            printf( "Enter the expression in Infix format:\n" );
+            cin.ignore();
+            getline( cin, infix_expression );
+            printf( "\n" );
+
+            string prefix_expression = convert_Class.convert_infix( infix_expression, "prefix" );
+            string postfix_expression = convert_Class.convert_infix( infix_expression, "postfix" );
+            
+            printf( "Prefix Form:\n" );
+            cout << prefix_expression << endl;
+            printf( "Postfix Form:\n" );
+            cout << postfix_expression << endl;
+
+            printf( "\n" );
+        }
+
+        else if ( control == 0 ) {
+            exit_interface();
+        }
+
+        else {
+            printf( "Invalid Choice!\n" );
+            
+        }
+
+        
+
+    }
+    
+}
+
+void test_single_expression() {
     string infix;
-    int max_length_of_string = 100;
     printf( "Enter Expression:\n" );
 
     // Cannot use scanf(), since we want the input string to include spaces
+    cin.ignore();
     getline( cin, infix ); 
     
     Conversion convert_Class;
@@ -622,7 +743,16 @@ int main() {
     string prefix  = convert_Class.convert_infix( infix, "prefix" );
     printf( "Prefix Expression:\n" );
     cout << prefix << "\n";
+}
 
+
+int main() {
+
+    // To test a single Infix to Prefix and Postfix Conversion -
+    //test_single_expression();
+    
+    UserInterface UI;
+    UI.main_loop();
 
     return 0;
 }
