@@ -590,9 +590,114 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
 }
 
 
-class Evaluation {
+class Evaluation : public Conversion {
 // Use Hash Maps for input values of variables
 // Derive some useful functions from Conversion using inheritance
+    private:
+        int tmp;
+        vector<string> variables;
+    public:
+        bool symbol_is_constant( string symbol ) {
+            // Returns true if the symbol is a constant.
+            
+            int length = symbol.length();
+
+            for ( int i = 0; i < length; i++ ) {
+                string character = symbol.substr( i,1 );
+
+                // The first character is allowed to be a negative sign
+                if ( i == 0 && character == "-" ) {
+                    continue;
+                } 
+
+                bool flag = false;
+                for ( int j = 0; j < 10; j++ ) {
+                    if ( character == to_string(i) ) {
+                        flag = true;
+                        break;
+                    }
+                }
+
+                // The character was not an integer
+                if ( flag == false ) {
+                    return false;
+                }
+            }
+
+            // The input symbol is a constant
+            return true;
+        }
+        
+
+        vector<string> getVariables( string expression ) {
+            // Takes an expression and extracts the variables
+
+            //vector< pair<string, double> > variables;
+            vector<string> variables;
+            vector<string> symbols = getSymbols( expression );
+            int length = symbols.size();
+            
+
+            for ( int i = 0; i < length; i++ ) {
+                string symbol = symbols[i];
+
+                // If a symbol is not and operand and not a constant, then it is a variable
+                if ( notOperand(symbol) && symbol_is_constant(symbol) == false ) {
+                    variables.push_back( symbol );
+                }
+            }
+            
+            return variables;
+        }
+
+        vector<string> getSymbolsOfValidExpression( string expression ) {
+            // CALL THIS FUNC DURING EVALUATION!
+            // Takes the expression (in any form), and returns a string with only constants and operators (which can be solved)
+            // takes double input from user, which can be assigned to the vector of variables.
+            
+            vector<string> variables = getVariables( expression );
+
+            vector< pair<string,double> > vars;
+
+            if ( vars.empty() ) {
+                vector<string> symbols = getSymbols( expression );
+                return symbols;
+            }
+
+            int number_of_variables = variables.size();
+
+            printf( "Enter values for the following variables:\n" );
+            for ( int i = 0; i < number_of_variables; i++ ) {
+                vars[i].first = variables[i];
+
+                double value = 0.0;
+                
+                cout << variables[i] << ": ";
+                scanf( "%lf",&value );
+
+                vars[i].second = value;
+            }
+
+            // find all instances of the variables and replace them in the symbols.
+            vector<string> symbols = getSymbols( expression );
+            int number_of_symbols = symbols.size();
+
+            for ( int i = 0; i < number_of_variables; i++ ) {
+                for ( int j = 0; j < number_of_symbols; j++ ) {
+
+                    // If an instance of the variable is found, it is replaced by the constant value
+                    if ( vars[i].first == symbols[j] ) {
+                        symbols[j] = to_string( vars[i].second );
+                    }
+                }
+            }
+
+            return symbols;
+        }
+
+        
+
+        
 };
 
 
