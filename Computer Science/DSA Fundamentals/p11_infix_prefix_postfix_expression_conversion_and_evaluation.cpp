@@ -8,16 +8,17 @@ Start Date: 08-March-2021
 
 /*
     TO DO:
+    - Account for decimal points during evaluation
     - Implement expression evaluation
     - Create a testing suite with known inputs and outputs
     - Implement balanced bracket check as well
-    - Make the whole thing menu driven
 */
 
 
 #include <iostream>
 #include <string>
 #include <vector>
+#include <math.h>
 
 
 // Macros that make defining the operator vector easy
@@ -256,6 +257,7 @@ class Conversion {
             vi_operator.PB( MP( MP( "+", "left"), 2 ) );
             vi_operator.PB( MP( MP( "-", "left"), 2 ) );
             vi_operator.PB( MP( MP( "=", "right"), 3 ) );
+            
 
             number_of_operators = vi_operator.size();
         }
@@ -597,7 +599,8 @@ class Evaluation : public Conversion {
         int tmp;
         vector<string> variables;
     public:
-        bool symbol_is_constant( string symbol ) {
+
+        bool isConstant( string symbol ) {
             // Returns true if the symbol is a constant.
             
             int length = symbol.length();
@@ -642,7 +645,7 @@ class Evaluation : public Conversion {
                 string symbol = symbols[i];
 
                 // If a symbol is not and operand and not a constant, then it is a variable
-                if ( notOperand(symbol) && symbol_is_constant(symbol) == false ) {
+                if ( notOperand(symbol) && isConstant(symbol) == false ) {
                     variables.push_back( symbol );
                 }
             }
@@ -695,10 +698,97 @@ class Evaluation : public Conversion {
             return symbols;
         }
 
-        
+        double evaluateMiniExpression( string pre_operand, string post_operand, string operator_ );
+
+        double evaluateExpression( vector<string> symbols, string expression_type );
+
+
 
         
 };
+
+double Evaluation::evaluateMiniExpression( string pre_operand, string post_operand, string operator_ ) {
+    // evaluates: operand (operator) operand, and returns the value
+
+    // convert string to integer using std::stod()
+    double first  = stod( pre_operand );
+    double second = stod( post_operand );
+
+    // Supports the following operators: ^ * / % + -
+    if ( operator_ == "^" ) {
+        return pow(first,second);
+    }
+    else if ( operator_ == "*" ) {
+        return first * second;
+    }
+    else if ( operator_ == "/" ) {
+        return first / second;
+    }
+    else if ( operator_ == "%" ) {
+        int tmp1 = first;
+        int tmp2 = second;
+        return tmp1 % tmp2;
+    }
+    else if ( operator_ == "+" ) {
+        return first + second;
+    }
+    else if ( operator_ == "-" ) {
+        return first - second;
+    }
+
+    return first;
+}
+
+double Evaluation::evaluateExpression( vector<string> symbols, string expression_type ) {
+    /*
+    Takes the symbols in the expression and the type of that expression (either postfix or prefix)
+    The expression contains only the constants and the operators
+    */
+    
+    int i = 0;
+    int number_of_symbols = symbols.size();
+    vector<string> stack;
+    int top = -1;
+
+    while( i < number_of_symbols ) {
+        string symbol = symbols[i];
+
+        // If the symbol is an operand (constant), push it into the stack
+        
+        if ( isConstant( symbol ) ) {
+            stack = push( stack, symbol, top );
+            top++;
+        }
+
+        // An operator has been encountered
+        else {
+            string top_element = stack[ top ];
+            top--;
+            stack.pop_back();
+
+            string top_minus_one_element = stack[ top ];
+            top--;
+            stack.pop_back();
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+        i++;
+
+    }
+    
+
+
+}
 
 
 class UserInterface {
