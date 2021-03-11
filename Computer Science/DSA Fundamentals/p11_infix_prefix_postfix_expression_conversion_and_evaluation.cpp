@@ -770,24 +770,28 @@ double Evaluation::evaluateExpression( vector<string> symbols, string expression
             top--;
             stack.pop_back();
 
+            double answer = evaluateMiniExpression( top_minus_one_element, top_element, symbols[i] );
 
-
-
+            string answer_string = to_string( answer );
+            stack = push( stack, answer_string, top );
+            top++;
 
         }
-
-
-
-
-
 
 
         i++;
 
     }
+
+    if ( top!= 0 ) {
+        printf("\n\nSomething went wrong!\n\n" );
+    }
+
+
+    string answer = stack[ top ];
+    double expression_result = stod( answer );
     
-
-
+    return expression_result;
 }
 
 
