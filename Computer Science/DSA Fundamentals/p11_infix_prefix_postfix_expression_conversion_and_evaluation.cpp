@@ -32,7 +32,7 @@ using namespace std;
 vector<string> push( vector<string> vi, string element, int top );
 void print_vector( vector<string> vi, string name_of_vector );
 string string_trim( string str );
-string string_reverse( string str );
+string string_reverse( vector<string> str_symbols );
 string string_swap_parentheses( string str );
 
 
@@ -130,26 +130,28 @@ string string_trim( string str ) {
 }
 
 
-string string_reverse( string str ) {
+string string_reverse( vector<string> str_symbols ) {
     /*
     Reverses an input string
 
     Argument -
-    String to be reversed
+    Vector of strings that contains the expression
 
     Return Value - 
-    Reverse string
+    String that contains the symbols in reverse
 
     */
     
     string new_str = "";
-    int length = str.length();
+    int length = str_symbols.size();
 
     for ( int i = length - 1; i >= 0; i-- ) {
-        
-        string character = str.substr( i,1 );
-        new_str += character;
+        string symbol = str_symbols[i];
+        new_str += " " + symbol;
     }
+
+    new_str = string_trim( new_str );
+
     return new_str;
 }
 
@@ -578,11 +580,13 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
 
     // Remove initial and trailing spaces of the final string
     new_expression = string_trim( new_expression );
-    
 
     // In the case of Infix to Prefix conversion, the actual output will be derived once we reverse the found solution
-    if ( to_postfix == false )
-        new_expression = string_reverse( new_expression );
+    if ( to_postfix == false ) {
+        // We are converting the string to its symbols to account for variables and constants that have more than one character
+        vector<string> symbols_in_prefix = getSymbols( new_expression );
+        new_expression = string_reverse( symbols_in_prefix );
+    }
 
     return new_expression;    
 }
@@ -640,7 +644,8 @@ Prefix - (passed)
 a = b + c * 10
 Postfix - (passed)
 a b c 10 * + =
-Prefix - (not passed)
+Prefix - (passed)
+= a + b * c 10
 
 
 3. Infix -
