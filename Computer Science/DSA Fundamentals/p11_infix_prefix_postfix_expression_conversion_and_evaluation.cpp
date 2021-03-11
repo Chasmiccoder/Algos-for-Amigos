@@ -8,7 +8,7 @@ Start Date: 08-March-2021
 
 /*
     TO DO:
-    - Create Help menu
+    - Implement expression evaluation
     - Create a testing suite with known inputs and outputs
     - Implement balanced bracket check as well
     - Make the whole thing menu driven
