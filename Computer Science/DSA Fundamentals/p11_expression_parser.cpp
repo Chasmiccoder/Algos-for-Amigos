@@ -642,12 +642,6 @@ class Evaluation : public Conversion {
                 }
                 
                 
-                /*
-                int digit = stoi( character );
-                if ( (digit >= 0 && digit <= 9) == false ) {
-                    return false;
-                }
-                */
             }
 
             // The input symbol is a constant
@@ -668,7 +662,6 @@ class Evaluation : public Conversion {
                 string symbol = symbols[i];
 
                 // If a symbol is not and operand and not a constant, then it is a variable
-                cout << "Symbol: " << symbol << " isConstant: " << isConstant(symbol) << endl; 
                 if ( isOperand(symbol) && isConstant(symbol) == false ) {
                     variables.push_back( symbol );
                 }
@@ -683,12 +676,6 @@ class Evaluation : public Conversion {
             // takes double input from user, which can be assigned to the vector of variables.
             
             vector<string> variables = getVariables( expression );
-
-            printf( "Variables: \n" );
-            for ( auto x : variables ) {
-                cout << x << endl;
-            }
-            printf("DONE\n");
 
             vector< pair<string,double> > vars;
 
@@ -782,10 +769,6 @@ double Evaluation::evaluateExpression( string expression, string expression_type
     
     vector<string> symbols = getSymbolsOfValidExpression( expression );
     printf( "E\n");
-    for ( auto x : symbols )  {
-        printf( "VI: " );
-        cout << x << endl;
-    }
 
     
     int i = 0;
@@ -992,9 +975,8 @@ int main() {
 
 
     Evaluation E;
-    
-    //string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /";
-    string expression = "1 a +";
+
+    string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /"; // answer to this: 
     
     
     double result = E.evaluateExpression( expression, "postfix" );
