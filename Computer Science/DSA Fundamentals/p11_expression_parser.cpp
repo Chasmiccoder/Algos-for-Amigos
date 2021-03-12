@@ -231,7 +231,7 @@ class Conversion {
     vector<string> getSymbols( string expression )
     Goes through an expression and breaks it into fundamental symbols (variables and operators)
 
-    bool notOperand( string symbol )
+    bool isOperand( string symbol )
     Returns true if a symbol is an operand (variable or constant)
 
     string convert_infix_to_postfix( string expression )
@@ -362,7 +362,7 @@ class Conversion {
             return symbols;
         }
 
-        bool notOperand( string symbol ) {
+        bool isOperand( string symbol ) {
             /*
             Returns true if the symbol is an operand
             Returns false if the symbol is either an operator, or a bracket
@@ -452,7 +452,7 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
         string symbol = symbols[i];
     
         // If the symbol is a constant or a variable (an operand), send it to the output
-        if ( notOperand( symbol ) ) 
+        if ( isOperand( symbol ) ) 
             new_expression += " " + symbol;
         
         // The Symbol is an operator or a parenthesis
@@ -593,7 +593,6 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
 
 
 class Evaluation : public Conversion {
-// Use Hash Maps for input values of variables
 // Derive some useful functions from Conversion using inheritance
     private:
         int tmp;
@@ -602,8 +601,14 @@ class Evaluation : public Conversion {
 
         bool isConstant( string symbol ) {
             // Returns true if the symbol is a constant.
+
+            // If the symbol is not an operand, it is not a constant
+            if ( isOperand(symbol) == false ) {
+                return false;
+            }
             
             int length = symbol.length();
+            bool decimal = false;
 
             for ( int i = 0; i < length; i++ ) {
                 string character = symbol.substr( i,1 );
@@ -611,11 +616,21 @@ class Evaluation : public Conversion {
                 // The first character is allowed to be a negative sign
                 if ( i == 0 && character == "-" ) {
                     continue;
-                } 
+                }
+                // If we find one decimal point, the string could be a constant.
+                if ( character == "." && decimal == false ) {
+                    decimal = true;
+                    continue;
+                }
+                // If the decimal point gets repeated, the symbol is not a constant
+                else if ( character == "." && decimal ) {
+                    return false;
+                }
 
+                
                 bool flag = false;
                 for ( int j = 0; j < 10; j++ ) {
-                    if ( character == to_string(i) ) {
+                    if ( character == to_string(j) ) {
                         flag = true;
                         break;
                     }
@@ -625,6 +640,14 @@ class Evaluation : public Conversion {
                 if ( flag == false ) {
                     return false;
                 }
+                
+                
+                /*
+                int digit = stoi( character );
+                if ( (digit >= 0 && digit <= 9) == false ) {
+                    return false;
+                }
+                */
             }
 
             // The input symbol is a constant
@@ -645,7 +668,8 @@ class Evaluation : public Conversion {
                 string symbol = symbols[i];
 
                 // If a symbol is not and operand and not a constant, then it is a variable
-                if ( notOperand(symbol) && isConstant(symbol) == false ) {
+                cout << "Symbol: " << symbol << " isConstant: " << isConstant(symbol) << endl; 
+                if ( isOperand(symbol) && isConstant(symbol) == false ) {
                     variables.push_back( symbol );
                 }
             }
@@ -660,9 +684,15 @@ class Evaluation : public Conversion {
             
             vector<string> variables = getVariables( expression );
 
+            printf( "Variables: \n" );
+            for ( auto x : variables ) {
+                cout << x << endl;
+            }
+            printf("DONE\n");
+
             vector< pair<string,double> > vars;
 
-            if ( vars.empty() ) {
+            if ( variables.empty() ) {
                 vector<string> symbols = getSymbols( expression );
                 return symbols;
             }
@@ -671,14 +701,17 @@ class Evaluation : public Conversion {
 
             printf( "Enter values for the following variables:\n" );
             for ( int i = 0; i < number_of_variables; i++ ) {
-                vars[i].first = variables[i];
+                //vars[i].first = variables[i];
+                
 
                 double value = 0.0;
                 
                 cout << variables[i] << ": ";
                 scanf( "%lf",&value );
 
-                vars[i].second = value;
+                //vars[i].second = value;
+                
+                vars.push_back( make_pair( variables[i], value ) );
             }
 
             // find all instances of the variables and replace them in the symbols.
@@ -700,7 +733,8 @@ class Evaluation : public Conversion {
 
         double evaluateMiniExpression( string pre_operand, string post_operand, string operator_ );
 
-        double evaluateExpression( vector<string> symbols, string expression_type );
+        
+        double evaluateExpression( string expression, string expression_type );
 
 
 
@@ -739,11 +773,20 @@ double Evaluation::evaluateMiniExpression( string pre_operand, string post_opera
     return first;
 }
 
-double Evaluation::evaluateExpression( vector<string> symbols, string expression_type ) {
+double Evaluation::evaluateExpression( string expression, string expression_type ) {
     /*
     Takes the symbols in the expression and the type of that expression (either postfix or prefix)
     The expression contains only the constants and the operators
     */
+
+    
+    vector<string> symbols = getSymbolsOfValidExpression( expression );
+    printf( "E\n");
+    for ( auto x : symbols )  {
+        printf( "VI: " );
+        cout << x << endl;
+    }
+
     
     int i = 0;
     int number_of_symbols = symbols.size();
@@ -947,11 +990,26 @@ void test_single_expression() {
 
 int main() {
 
+
+    Evaluation E;
+    
+    //string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /";
+    string expression = "1 a +";
+    
+    
+    double result = E.evaluateExpression( expression, "postfix" );
+    
+    printf( "Answer: %.2f\n", result );
+
+
     // To test a single Infix to Prefix and Postfix Conversion -
     //test_single_expression();
     
+
+    /*
     UserInterface UI;
     UI.main_loop();
+    */
 
     return 0;
 }
