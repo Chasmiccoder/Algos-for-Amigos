@@ -768,8 +768,6 @@ double Evaluation::evaluateExpression( string expression, string expression_type
 
     
     vector<string> symbols = getSymbolsOfValidExpression( expression );
-    printf( "E\n");
-
     
     int i = 0;
     int number_of_symbols = symbols.size();
@@ -975,8 +973,13 @@ int main() {
 
 
     Evaluation E;
+    Conversion C;
 
-    string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /"; // answer to this: 
+    //string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /"; // answer to this: 
+
+    string expression = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
+    
+    expression = C.convert_infix( expression, "postfix" );
     
     
     double result = E.evaluateExpression( expression, "postfix" );
