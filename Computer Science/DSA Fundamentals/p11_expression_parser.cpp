@@ -616,20 +616,32 @@ class Evaluation : public Conversion {
     vector<string> variables = Vector of strings that contains all the variables used in the expression
 
     Methods -
-    bool isConstant
+    bool isConstant( string symbol )
+    Returns true if the symbol is a constant
 
+    vector<string> getVariables( string expression )
+    Returns a vector of all the variables in an expression
 
+    vector<string> getSymbolsOfValidExpression( string expression )
+    Returns the expression with only constants and operators, after taking appropriate user input
 
+    double evaluateMiniExpression( string pre_operand, string post_operand, string operator_ )
+    Returns the value of: (pre_operand) [operator_] (post_operand)
 
+    double evaluateExpression( string expression, string expression_type )
+    Returns the evaluated result of the expression in infix/postfix/prefix format, with only constants and operators
     
+    19-04
     */
+
     private:
         vector<string> variables;
 
     public:
-
         bool isConstant( string symbol ) {
-            // Returns true if the symbol is a constant.
+            /*
+            Returns true if the symbol is a constant.
+            */
 
             // If the symbol is not an operand, it is not a constant
             if ( isOperand(symbol) == false ) {
@@ -655,8 +667,8 @@ class Evaluation : public Conversion {
                 else if ( character == "." && decimal ) {
                     return false;
                 }
-
                 
+                // Searching for an integer from 0 to 9 that matches with the character
                 bool flag = false;
                 for ( int j = 0; j < 10; j++ ) {
                     if ( character == to_string(j) ) {
@@ -669,8 +681,6 @@ class Evaluation : public Conversion {
                 if ( flag == false ) {
                     return false;
                 }
-                
-                
             }
 
             // The input symbol is a constant
@@ -679,13 +689,13 @@ class Evaluation : public Conversion {
         
 
         vector<string> getVariables( string expression ) {
-            // Takes an expression and extracts the variables
+            /*
+            Takes an expression and extracts the variables
+            */
 
-            //vector< pair<string, double> > variables;
             vector<string> variables;
             vector<string> symbols = getSymbols( expression );
             int length = symbols.size();
-            
 
             for ( int i = 0; i < length; i++ ) {
                 string symbol = symbols[i];
@@ -699,14 +709,15 @@ class Evaluation : public Conversion {
             return variables;
         }
 
+
         vector<string> getSymbolsOfValidExpression( string expression ) {
-            // CALL THIS FUNC DURING EVALUATION!
-            // Takes the expression (in any form), and returns a string with only constants and operators (which can be solved)
-            // takes double input from user, which can be assigned to the vector of variables.
+            /*
+            Takes the expression (in any form), and returns a string with only constants and operators (which can be solved)
+            Does this by taking input from the user, which gets assigned to the vector of variables
+            */
             
             vector<string> variables = getVariables( expression );
-
-            vector< pair<string,double> > vars;
+            vector< pair<string,double> > vars; // Stores the variable name and its value
 
             if ( variables.empty() ) {
                 vector<string> symbols = getSymbols( expression );
@@ -715,22 +726,17 @@ class Evaluation : public Conversion {
 
             int number_of_variables = variables.size();
 
-            printf( "Enter values for the following variables:\n" );
+            printf( "\nEnter values for the following variables:\n" );
             for ( int i = 0; i < number_of_variables; i++ ) {
-                //vars[i].first = variables[i];
-                
-
                 double value = 0.0;
                 
                 cout << variables[i] << ": ";
                 scanf( "%lf",&value );
 
-                //vars[i].second = value;
-                
                 vars.push_back( make_pair( variables[i], value ) );
             }
 
-            // find all instances of the variables and replace them in the symbols.
+            // Find all instances of the variables and replace them in the symbols.
             vector<string> symbols = getSymbols( expression );
             int number_of_symbols = symbols.size();
 
@@ -747,20 +753,18 @@ class Evaluation : public Conversion {
             return symbols;
         }
 
+
         double evaluateMiniExpression( string pre_operand, string post_operand, string operator_ );
-
-        
-        double evaluateExpression( string expression, string expression_type );
-
-
-
-        
+        double evaluateExpression( string expression, string expression_type );        
 };
 
-double Evaluation::evaluateMiniExpression( string pre_operand, string post_operand, string operator_ ) {
-    // evaluates: operand (operator) operand, and returns the value
 
-    // convert string to integer using std::stod()
+double Evaluation::evaluateMiniExpression( string pre_operand, string post_operand, string operator_ ) {
+    /*
+    Returns the value of: (pre_operand) [operator_] (post_operand)
+    */
+
+    // Convert string to double using std::stod()
     double first  = stod( pre_operand );
     double second = stod( post_operand );
 
@@ -789,12 +793,30 @@ double Evaluation::evaluateMiniExpression( string pre_operand, string post_opera
     return first;
 }
 
+
 double Evaluation::evaluateExpression( string expression, string expression_type ) {
     /*
-    Takes the symbols in the expression and the type of that expression (either postfix or prefix)
+    Takes the symbols in the expression and the type of that expression ("infix" or "postfix" or "prefix")
     The expression contains only the constants and the operators
+
+    Postfix Evaluation Process:
+    ===========================
+    Loop through all the symbols from left to right
+    If a constant is found, push it to the operation stack
+    If an operand is found, find the value of the expression: operand_before_top_operand [operator] top_operand
+    Remove the top two operands and push the value found above into the operation stack
+    Do this until all the operators are used up, and there is only 1 value left in the operation stack (which is the answer)
+
+    Prefix Evaluation Process:
+    ==========================
+    Loop through all the symbols from right to left
+    Similar to Postfix evaluation, except for when we find an operand
+    If an operand is found, find the value of the expression: top_operand [operator] operand_before_top_operand
+    Remove the top two operands and push the value found above into the operation stack
+
     */
     
+    // If the expression in is infix, just convert it to postfix first and then evaluate it
     if ( expression_type == "infix" ) {
         Conversion toPostfix;
         expression = toPostfix.convert_infix( expression, "postfix" );
@@ -805,25 +827,20 @@ double Evaluation::evaluateExpression( string expression, string expression_type
     
     int i = 0;
     int number_of_symbols = symbols.size();
+
+    // Operation Stack
     vector<string> stack;
     int top = -1;
 
+    // If the expression if in prefix form, start from the last symbol, and loop backwards
     if ( expression_type == "prefix" ) {
         i = number_of_symbols - 1;
-        
-
     }
-
-    
 
     while( ( i < number_of_symbols && expression_type == "postfix") || ( i >= 0 && expression_type == "prefix" ) ) {
         string symbol = symbols[i];
 
-        //printf( "STACK: \n" );
-        //print_vector( stack, "OperationSTack" );
-
-        // If the symbol is an operand (constant), push it into the stack
-        
+        // If the symbol is an operand (constant), push it into the stack        
         if ( isConstant( symbol ) ) {
             stack = push( stack, symbol, top );
             top++;
@@ -831,6 +848,8 @@ double Evaluation::evaluateExpression( string expression, string expression_type
 
         // An operator has been encountered
         else {
+
+            // Removing the top two elements
             string top_element = stack[ top ];
             top--;
             stack.pop_back();
@@ -839,6 +858,7 @@ double Evaluation::evaluateExpression( string expression, string expression_type
             top--;
             stack.pop_back();
 
+            // Evaluating the top two elements according to the expression type
             double answer;
             if ( expression_type == "postfix" ) {
                 answer = evaluateMiniExpression( top_minus_one_element, top_element, symbols[i] );
@@ -848,28 +868,25 @@ double Evaluation::evaluateExpression( string expression, string expression_type
                 answer = evaluateMiniExpression ( top_element, top_minus_one_element, symbols[i] );
                 
             }
-            
 
+            // Pushing the evalutated answer into the operation stack
             string answer_string = to_string( answer );
             stack = push( stack, answer_string, top );
             top++;
-
         }
 
         if ( expression_type == "postfix" ) {
             i++;
         }
         else {
-            i--; //prefix
+            // Prefix
+            i--;
         }
-        
-
     }
 
     if ( top!= 0 ) {
         printf("\n\nSomething went wrong!\n\n" );
     }
-
 
     string answer = stack[ top ];
     double expression_result = stod( answer );
@@ -892,11 +909,9 @@ class UserInterface {
             printf( "1 - Convert Infix Expression to Prefix Form\n" );
             printf( "2 - Convert Infix Expression to Postfix Form\n" );
             printf( "3 - Convert Infix Expression to both Prefix and Postfix Forms\n" );
-            printf( "4 - Evaluate an Infix Expression\n" );
-            printf( "5 - Evaluate a Prefix Expression\n" );
-            printf( "6 - Evaluate a Postfix Expression\n\n" );
+            printf( "4 - Evaluate an Expression (In any format)\n" );
 
-            printf( "7 - Print the Instructions\n" );
+            printf( "5 - Print the Instructions\n" );
             printf( "0 - Terminate the program\n\n" );
 
         }
@@ -907,17 +922,17 @@ class UserInterface {
             printf( "There should be a space between each element of the expression.\n" );
             printf( "For example, there should be a space between the operators and the operands.\n" );
             printf( "Variables must use alphabetic characters only. Constants like 101, 24 can be used.\n" );
-            printf( "Example of valid Infix Expression:\n( ( a * b - ( c + d ) ) ) ^ e / ( f * g + h )\n\n" );
+            printf( "Example of valid Infix Expression:\n( ( a * b - ( c + d ) ) ) ^ e / ( f * g + h )\n" );
+            printf( "\n" );
             
         }
 
         void exit_interface() {
             printf( "\n----------------------------------------------\n" );
-            printf( "Thank you for using the Expression Calculator!\n\n" );
+            printf( "Thank you for using the Expression Parser!\n\n" );
         }
 
         void main_loop();
-
 };
 
 
@@ -929,16 +944,6 @@ void UserInterface::main_loop() {
     welcome();
     instructions();
     help_menu();
-
-    /*
-    printf( "Enter choice of integer: " );
-    scanf( "%d", &control );
-    printf( "\n" );
-
-    if ( control == 0 ) {
-        exit_interface();
-    }
-    */
 
     while ( control != 0 ) {
 
@@ -993,6 +998,26 @@ void UserInterface::main_loop() {
             printf( "\n" );
         }
 
+        else if ( control == 4 ) {
+            Evaluation evaluate_Class;
+            string expression_type;
+            string expression;
+
+            printf( "Enter Conversion type (\"infix\"/\"prefix\"/\"postfix\"):\n" );
+            cin.ignore();
+            cin >> expression_type;
+            printf( "Enter the Expression:\n" );
+            cin.ignore();
+            getline( cin, expression );
+
+            double result = evaluate_Class.evaluateExpression( expression, expression_type );
+            printf( "The answer to the input expression is:\n%.3f\n\n", result );
+        }
+
+        else if ( control == 5 ) {
+            instructions();
+        }
+
         else if ( control == 0 ) {
             exit_interface();
         }
@@ -1001,12 +1026,10 @@ void UserInterface::main_loop() {
             printf( "Invalid Choice!\n" );
             
         }
-
-        
-
     }
     
 }
+
 
 void test_single_expression() {
     string infix;
@@ -1029,49 +1052,9 @@ void test_single_expression() {
 
 
 int main() {
-
-
-    Evaluation E;
-    Conversion C;
-
-    /* Postfix, infix are working. Prefix isn't
-    string question = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
-    double d_ans = E.evaluateExpression( question, "infix" );
-    cout << "HERE FIRST: " << d_ans << endl;
-    */
-
-    string emo = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
-    string ans = C.convert_infix( emo, "prefix" );
-    cout << "Prefix: " << ans << endl;
-
-    double result = E.evaluateExpression( ans, "prefix" );
     
-    printf( "Answer: %.2f\n", result );
-
-    //string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /"; // Postfix
-
-    //string expression = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )"; // Infix
-    //string expression = "* 1 / ^ - 2 + 3 4 5 + * 6 7 8"; // Prefix
-    //string expression = "- a b";
-
-    //string expression;
-    //getline( cin, expression );
-
-    
-    //expression = C.convert_infix( expression, "postfix" );
-    
-    
-    
-
-
-    // To test a single Infix to Prefix and Postfix Conversion -
-    //test_single_expression();
-    
-
-    /*
     UserInterface UI;
     UI.main_loop();
-    */
 
     return 0;
 }
@@ -1086,7 +1069,7 @@ passed = The given testcase gave the right output
 Postfix - (passed)
 1 2 3 - 4 + 5 ^ * 6 7 * 8 + /
 Prefix - (passed)
-* 1 / ^ - 2 + 3 4 5 + * 6 7 8
+/ * 1 ^ + - 2 3 4 5 + * 6 7 8
 
 
 2. Infix -
@@ -1102,7 +1085,7 @@ w + f ^ g - h / ( a + b )
 Postfix - (passed)
 w f g ^ + h a b + / -
 Prefix - (passed)
-+ w - ^ f g / h + a b
+- + w ^ f g / h + a b
 
 
 4. Infix -
@@ -1118,7 +1101,7 @@ a - b ^ c + f ^ g / h * g ^ 1
 Postfix - (passed) 
 a b c ^ - f g ^ h / g 1 ^ * +
 Prefix - (passed)
-- a + ^ b c / ^ f g * h ^ g 1
++ - a ^ b c * / ^ f g h ^ g 1
 
 
 6. Infix -
@@ -1126,7 +1109,6 @@ Prefix - (passed)
 Postfix - (passed)
 a b + b c + d f * - * 1 2 + /
 Prefix - (passed)
-/ * + a b + b - c * d f + 1 2
-
+/ * + a b - + b c * d f + 1 2
 
 */
