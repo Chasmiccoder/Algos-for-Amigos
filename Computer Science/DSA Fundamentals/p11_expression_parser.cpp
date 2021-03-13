@@ -977,7 +977,11 @@ int main() {
 
     //string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /"; // answer to this: 
 
-    string expression = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
+    //string expression = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
+    string expression;
+    getline( cin, expression );
+
+    /*message: Demonstration*/
     
     expression = C.convert_infix( expression, "postfix" );
     
