@@ -607,7 +607,6 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
 
 
 class Evaluation : public Conversion {
-// Derive some useful functions from Conversion using inheritance
     /*
     This class helps evaluate an expression in infix/prefix/postfix form
     The input string can contain variables as well, in which case the user will be prompted to input values for the variables
@@ -631,6 +630,10 @@ class Evaluation : public Conversion {
     double evaluateExpression( string expression, string expression_type )
     Returns the evaluated result of the expression in infix/postfix/prefix format, with only constants and operators
     
+    Functions inherited from Conversion class:
+    getSymbols()
+    isOperand()
+
     19-04
     */
 
