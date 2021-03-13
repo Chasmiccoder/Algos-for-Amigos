@@ -294,7 +294,7 @@ class Conversion {
         }
 
 
-        bool precedence( string ICO, string ISO ) {
+        bool precedence( string ICO, string ISO, string conversion_type ) {
             /*
             Returns true if ICO > ISO
             If they have the same priority, it checks for associativity
@@ -314,11 +314,24 @@ class Conversion {
             else if ( ico_precedence[0] == iso_precedence[0] ) {
 
                 // Left associativity
-                if ( ico_precedence[1] == 1  ) 
-                    return false; 
+                if ( ico_precedence[1] == 1  ) {
+                    if ( conversion_type == "postfix" ) {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                
                 
                 // Right associativity
-                return true; 
+                if ( conversion_type == "postfix" ) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
             }
             else {
                 // ICO < ISO
@@ -408,6 +421,7 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
     Each time a symbol is to be added to the output, we will append it at the end, 
     and then to produce the final string, we will reverse it
     Operator and operand handling is to be done the way it is done with postfix conversion
+    Associativity handling is the reverse for infix to prefix conversion
     
     16-06
     */
@@ -514,7 +528,7 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
             }
 
             // If ICO > ISO, this var is true
-            bool ico_greater_than_iso = precedence( symbol, top_symbol );
+            bool ico_greater_than_iso = precedence( symbol, top_symbol, conversion_type );
             
             // If ICO > ISO, push the ICO into the operation stack
             if ( ico_greater_than_iso && execute_operation  ) {
@@ -551,7 +565,7 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
                 }
 
                 // Recalculate precedence between ICO and the new ISO
-                ico_greater_than_iso = precedence( symbol, top_symbol );
+                ico_greater_than_iso = precedence( symbol, top_symbol, conversion_type );
             }
             
             // If the continuous pop operation was executed for the operands, push the Incoming operator into the stack
@@ -594,9 +608,24 @@ string Conversion::convert_infix( string expression, string conversion_type ) {
 
 class Evaluation : public Conversion {
 // Derive some useful functions from Conversion using inheritance
+    /*
+    This class helps evaluate an expression in infix/prefix/postfix form
+    The input string can contain variables as well, in which case the user will be prompted to input values for the variables
+
+    Vars -
+    vector<string> variables = Vector of strings that contains all the variables used in the expression
+
+    Methods -
+    bool isConstant
+
+
+
+
+    
+    */
     private:
-        int tmp;
         vector<string> variables;
+
     public:
 
         bool isConstant( string symbol ) {
@@ -765,8 +794,13 @@ double Evaluation::evaluateExpression( string expression, string expression_type
     Takes the symbols in the expression and the type of that expression (either postfix or prefix)
     The expression contains only the constants and the operators
     */
-
     
+    if ( expression_type == "infix" ) {
+        Conversion toPostfix;
+        expression = toPostfix.convert_infix( expression, "postfix" );
+        expression_type = "postfix";
+    }
+
     vector<string> symbols = getSymbolsOfValidExpression( expression );
     
     int i = 0;
@@ -774,8 +808,19 @@ double Evaluation::evaluateExpression( string expression, string expression_type
     vector<string> stack;
     int top = -1;
 
-    while( i < number_of_symbols ) {
+    if ( expression_type == "prefix" ) {
+        i = number_of_symbols - 1;
+        
+
+    }
+
+    
+
+    while( ( i < number_of_symbols && expression_type == "postfix") || ( i >= 0 && expression_type == "prefix" ) ) {
         string symbol = symbols[i];
+
+        //printf( "STACK: \n" );
+        //print_vector( stack, "OperationSTack" );
 
         // If the symbol is an operand (constant), push it into the stack
         
@@ -794,7 +839,16 @@ double Evaluation::evaluateExpression( string expression, string expression_type
             top--;
             stack.pop_back();
 
-            double answer = evaluateMiniExpression( top_minus_one_element, top_element, symbols[i] );
+            double answer;
+            if ( expression_type == "postfix" ) {
+                answer = evaluateMiniExpression( top_minus_one_element, top_element, symbols[i] );
+            }
+            else {
+                //prefix
+                answer = evaluateMiniExpression ( top_element, top_minus_one_element, symbols[i] );
+                
+            }
+            
 
             string answer_string = to_string( answer );
             stack = push( stack, answer_string, top );
@@ -802,8 +856,13 @@ double Evaluation::evaluateExpression( string expression, string expression_type
 
         }
 
-
-        i++;
+        if ( expression_type == "postfix" ) {
+            i++;
+        }
+        else {
+            i--; //prefix
+        }
+        
 
     }
 
@@ -975,20 +1034,34 @@ int main() {
     Evaluation E;
     Conversion C;
 
-    //string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /"; // answer to this: 
+    /* Postfix, infix are working. Prefix isn't
+    string question = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
+    double d_ans = E.evaluateExpression( question, "infix" );
+    cout << "HERE FIRST: " << d_ans << endl;
+    */
 
-    //string expression = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
-    string expression;
-    getline( cin, expression );
+    string emo = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )";
+    string ans = C.convert_infix( emo, "prefix" );
+    cout << "Prefix: " << ans << endl;
 
-    /*message: Demonstration*/
-    
-    expression = C.convert_infix( expression, "postfix" );
-    
-    
-    double result = E.evaluateExpression( expression, "postfix" );
+    double result = E.evaluateExpression( ans, "prefix" );
     
     printf( "Answer: %.2f\n", result );
+
+    //string expression = "1 2 3 - 4 + 5 ^ * 6 7 * 8 + /"; // Postfix
+
+    //string expression = "1 * ( 2 - 3 + 4 ) ^ 5 / ( 6 * 7 + 8 )"; // Infix
+    //string expression = "* 1 / ^ - 2 + 3 4 5 + * 6 7 8"; // Prefix
+    //string expression = "- a b";
+
+    //string expression;
+    //getline( cin, expression );
+
+    
+    //expression = C.convert_infix( expression, "postfix" );
+    
+    
+    
 
 
     // To test a single Infix to Prefix and Postfix Conversion -
