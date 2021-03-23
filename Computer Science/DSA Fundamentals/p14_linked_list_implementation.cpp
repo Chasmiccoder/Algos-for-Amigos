@@ -119,6 +119,9 @@ void delete_element( Node* head_ptr, int position ) {
         current = current->link;
         head_ptr->link = current->link;
         head_ptr->data = "";
+
+        // Free the space used up by the deleted node
+        delete current;
     }
 
     // If position is -1 (default argument), delete the last element
@@ -135,6 +138,7 @@ void delete_element( Node* head_ptr, int position ) {
         }
         // Update the (n-1)th node to point to a NULL value
         previous->link = NULL;
+        delete current;
     }
 
     else {
@@ -152,6 +156,7 @@ void delete_element( Node* head_ptr, int position ) {
         }
         // The (i-1)th element will point to the (i+1)th element
         previous->link = current->link;
+        delete current;
     }
 }
 
