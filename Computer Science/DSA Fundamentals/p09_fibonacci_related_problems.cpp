@@ -338,6 +338,39 @@ int last_digit_of_partial_sum_of_fibonacci_numbers( long long m, long long n ) {
 }
 
 
+int naive_last_digit_sum_of_squares_of_first_n_fibonacci_numbers( long long n ) {
+    /*
+    Finds the sum of the squares of the first n Fibonacci Numbers using a simple, but slow solution
+    */
+    long long b = 0;
+    long long a = 1;
+    long long sum = 1;
+    for ( int i = 2; i <= n; i++ ) {
+        int tmp = b%10;
+        b = a%10;
+        a = ( a%10 + tmp%10 ) %10;
+        sum += (a*a) % 10;
+    }
+    return (int)sum%10;
+}
+
+
+int last_digit_sum_of_squares_of_first_n_fibonacci_numbers( long long n ) {
+    /*
+    The squares of the fibonacci numbers form a spiral. It turns out that we can get the area of the
+    rectangle by multiplying the length ( (Fn % 10 + F(n-1) % 10)%10 ) by the breadth ( Fn % 10 )
+    */
+    
+    if ( n == 0 || n == 1 ) {
+        return n;
+    }
+    vector<int> vi = last_digit_of_nth_fibonacci_number_and_the_one_before( n );
+
+    int ans = vi[1] * ( vi[1] + vi[0] );
+    return ans % 10;
+}
+
+
 int main() {
 
     printf( "Fibonacci Related Problems!\n" );
@@ -398,7 +431,16 @@ int main() {
 
     answer = last_digit_of_partial_sum_of_fibonacci_numbers( M, N );
     printf( "Last digit of the sum of Fibonacci Numbers from %lld to %lld is: %d\n\n", M, N, answer );
+    // For M = 10, N = 200, answer = 2
 
+    // Compute the last digit of the sum of the squares of the first n Fibonacci Numbers
+    printf( "Compute the last digit of the sum of the squares of the first n Fibonacci Numbers\n" );
+    printf( "Enter the value of n: " );
+    scanf( "%lld", &N );
+
+    answer = last_digit_sum_of_squares_of_first_n_fibonacci_numbers( N );
+    printf( "Last digit of the sum of the squares of the first %lld Fibonacci Numbers is: %d\n\n", N, answer );
+    // For n = 1234567890, answer = 0
 
     return 0;
 }
