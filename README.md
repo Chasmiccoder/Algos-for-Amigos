@@ -32,6 +32,7 @@ This repository contains all the algorithms we have encountered in the fields of
 |||3 - Print numbers without numbers|
 
 <br>
+
 ## Mathematics
 
 |Domain|Sub-Domain|Topic|
