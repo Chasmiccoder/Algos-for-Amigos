@@ -1,4 +1,15 @@
 /*
+This program solves various problems related to the Fibonacci Series
+1) Find the nth Fibonacci Number using an efficient algorithm
+2) Find the last digit of the nth Fibonacci Number
+3) Find the value of the nth Fibonacci Number modulo m (n <= 10^14)
+4) Find the last digit of the sum of the first n Fibonacci Numbers (n <= 10^14)
+5) Find the last digit of the partial sum of the Fibonacci Numbers from m to n 
+6) Find the last digit of the sum of the squares of the first n Fibonacci Numbers
+
+
+This code also introduces the concept of stress testing which has been applied to solve problem number 4
+
 Pisano Period,
 */
 
@@ -386,7 +397,7 @@ int main() {
     scanf ("%lld %lld", &M, &N);
 
     answer = last_digit_of_partial_sum_of_fibonacci_numbers( M, N );
-    printf( "Last digit of the sum of Fibonacci Numbers from %lld to %lld is:%d\n\n", M, N, answer );
+    printf( "Last digit of the sum of Fibonacci Numbers from %lld to %lld is: %d\n\n", M, N, answer );
 
 
     return 0;
