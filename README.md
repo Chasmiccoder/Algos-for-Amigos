@@ -28,6 +28,7 @@ This repository contains all the algorithms we have encountered in the fields of
         <ol>
 -->
 
+<!--
 <table>
     <thead>
         <th><b>Domain</b></th>
@@ -68,6 +69,26 @@ This repository contains all the algorithms we have encountered in the fields of
         <td></td>
         <td></td>
         <td>ii) Classification [p1] (KNN, MLP)</td>
+</table>
+-->
+
+|Domain|Sub-Domain|Topic|
+|:-----|:---------|:----|
+|Data Structures and Algorithms|Sorting|1 - Bubble Sort|
+|||2 - Selection Sort|
+|||3 - Counting Sort|
+||Basic Algorithms|4 - Maximum Pairwise Product|
+|||5 - Decimal to Binary Conversion|
+|||6 - Greatest Common Divisor|
+|||7 - Lowest Common Multiple|
+||Linear Data Structures|8 - Stack Implementation|
+|||9 - Balanced Bracket Check|
+|||10 - Expression Parser|
+|||11 - Queue Implementation|
+|||12 - Linked List Implementation|
+|Interview Questions|Language Proficiency|1 - Hello World|
+|||2 - Fizzbuzz|
+|||3 - Print numbers without numbers|
 
 
 </p>
