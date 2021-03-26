@@ -1,4 +1,4 @@
-# All the Algorithms you'll ever need xD
+## All the Algorithms you'll ever need xD
 ### Algorithms used in Computer Science, Physics and Mathematics
 
 This repository contains all the algorithms we have encountered in the fields of Computer Science, Mathematics and Physics!
@@ -12,8 +12,6 @@ This repository contains all the algorithms we have encountered in the fields of
 </ul>
 
 ## Computer Science
-<p>
-<br>
 
 |Domain|Sub-Domain|Topic|
 |:-----|:---------|:----|
@@ -33,14 +31,14 @@ This repository contains all the algorithms we have encountered in the fields of
 |||2 - Fizzbuzz|
 |||3 - Print numbers without numbers|
 
-
+<br>
 ## Mathematics
-|Series|Fundamental Series|1 - Fibonacci Series|
+
+|Domain|Sub-Domain|Topic|
 |:-----|:-----------------|:-------------------|
-||| Coming soon |
+|Series|Fundamental Series|1 - Fibonacci Series|
 
 
-</p>
 
 <!--
 ## Physics
