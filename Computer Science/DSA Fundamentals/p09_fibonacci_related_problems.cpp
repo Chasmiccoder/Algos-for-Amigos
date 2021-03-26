@@ -10,7 +10,25 @@ This program solves various problems related to the Fibonacci Series
 
 This code also introduces the concept of stress testing which has been applied to solve problem number 4
 
-Pisano Period,
+To solve problems 3, 4 and 5, we use the patterns they produce, which gets repeated after a certain period
+Pisano Period:
+The pattern produced in the sequence of the nth Fibonacci number modulo m
+To find these patterns, we start with the first element of the pattern, and the one before that
+Then we compute the succeeding values using these two numbers until those initial numbers repeat 
+(in which case everything that follows will also repeat)
+
+Then, we use the pattern found to find the specific solution to the problem
+
+Solving problem 6:
+It turns out that the sum of the squares of the first n Fibonacci Numbers creates a Fibonacci Spiral
+The area of the rectangle formed is the sum of the squares of the first n Fibonacci Numbers
+The area of the rectangle is simply the product of its length and breadth
+length = Fn + F(n-1)
+breadth = Fn
+
+Where Fn     = nth Fibonacci Number
+      F(n-1) = (n-1)th Fibonacci Number
+
 */
 
 #include <iostream>
