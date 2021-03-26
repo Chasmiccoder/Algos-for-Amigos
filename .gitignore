@@ -225,3 +225,15 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# For Visual Studio Code Files
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+tempCodeRunnerFile.cpp
