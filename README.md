@@ -9,6 +9,7 @@ This repository contains all the algorithms we have encountered in the fields of
     <li><a href="https://github.com/Chasmiccoder">Aryaman Kolhe</a></li><br>
     <li><a href="https://github.com/lolzone13">Mohit Manoj</a></li><br>
     <li><a href="https://github.com/z404">Anish Raghavendra</a></li><br>
+    <li><a href="https://github.com/z404">Anish Cherekar</a></li><br>
 </ul>
 
 ## Computer Science
