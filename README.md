@@ -38,6 +38,7 @@ This repository contains all the algorithms we have encountered in the fields of
 |Domain|Sub-Domain|Topic|
 |:-----|:-----------------|:-------------------|
 |Series|Fundamental Series|1 - Fibonacci Series|
+|Linear Algebra|Basics|1 - Print Matrix|
 
 
 

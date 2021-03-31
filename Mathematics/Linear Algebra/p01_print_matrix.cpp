@@ -44,7 +44,7 @@ void pretty_print_matrix( vector< vector<float> > matrix, int rows, int columns,
         }
     }
 
-    cout << "Matrix '" << matrix_name << "':" << endl;
+    cout << "\nMatrix '" << matrix_name << "':" << endl;
 
     print_edges( columns, max_len );
 
