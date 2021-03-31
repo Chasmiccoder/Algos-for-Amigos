@@ -9,7 +9,25 @@ Will be used extensively in future codes
 
 using namespace std;
 
+
+void print_edges( int columns, int max_len ) {
+    /*
+    Print the edges of the matrix
+    */
+    
+    printf( "--" );
+    int format = 12;
+    int number_of_spaces = ( max_len * columns ) + ( 3 * (columns-1) ) - format;
+    string spaces = string( number_of_spaces, ' ' );
+    cout << spaces;
+    printf( "--\n" );
+}
+
+
 void pretty_print_matrix( vector< vector<float> > matrix, int rows, int columns, string matrix_name ) {
+    /*
+    Function to print an input matrix in readable format
+    */
     
     // Keeps track of the length of the largest number
     int max_len = 0;
@@ -28,7 +46,8 @@ void pretty_print_matrix( vector< vector<float> > matrix, int rows, int columns,
 
     cout << "Matrix '" << matrix_name << "':" << endl;
 
-    printf( "--\n" );
+    print_edges( columns, max_len );
+
     for ( int i = 0; i < rows; i++ ) {
         printf( "| " );
         for ( int j = 0; j < columns; j++ ) {
@@ -39,17 +58,23 @@ void pretty_print_matrix( vector< vector<float> > matrix, int rows, int columns,
 
             s_element = s_element.substr( 0, length-4 ); // For practical reasons we want accuracy up to 2 decimals
             cout << s_element;
+
+            // This loop accounts for elements that have length lesser than the element with the largest length
             while ( length < max_len ) {
                 printf( " " );
                 length++;
             }
+            if ( j != columns - 1 ) {
+                printf( "   " );
+            }
             
-            printf( "   " );
         }
         printf( " |\n" );
     }
 
-    
+    print_edges( columns, max_len );
+
+    printf( "\n" );
 }
 
 
@@ -78,7 +103,6 @@ int main() {
     }
 
     pretty_print_matrix( matrix, rows, columns, name );
-
 
     return 0;
 }
