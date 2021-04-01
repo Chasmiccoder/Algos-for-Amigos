@@ -26,7 +26,14 @@ The function doesn't return a minor directly. It returns its matrix instead
 #include <vector>
 #include <math.h>
 
+
 using namespace std;
+
+
+vector< vector<float> > minor_in_matrix_form( vector< vector<float> > matrix, int row, int column, int size );
+
+float determinant( vector< vector<float> > matrix, int size );
+
 
 void print_matrix( vector<vector<float>> vi ) {
     for ( int i = 0; i < vi.size(); i++ ) {
@@ -69,6 +76,11 @@ vector< vector<float> > minor_in_matrix_form( vector< vector<float> > matrix, in
     return minor_matrix;
 }
 
+/*
+Checkout:
+float determinant( const vector< vector<float> >& matrix, int size ) {
+float determinant( vector< vector<float> > const& matrix, int size ) {
+*/
 
 float determinant( vector< vector<float> > matrix, int size ) {
     if ( size == 1 ) {
@@ -76,9 +88,9 @@ float determinant( vector< vector<float> > matrix, int size ) {
     }
     if ( size == 2 ) {
         printf("F: ");
-        cout << matrix[0][0] << endl;
-        //cout << matrix[1][0] << endl; 
-        //first row elements can't be accessed
+        cout << matrix[0][0] << endl;         //first row elements can't be accessed This line of code crashes the execution
+        cout << matrix[1][0] << endl; 
+        
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
 
@@ -91,7 +103,9 @@ float determinant( vector< vector<float> > matrix, int size ) {
             continue;
         }
 
-        vector< vector<float> > minor_matrix = minor_in_matrix_form( matrix, 0, i, size );
+        vector< vector<float> > minor_matrix;
+        minor_matrix = minor_in_matrix_form( matrix, 0, i, size );
+        //minor_matrix.resize( size ); // Doesn't help
     
         printf( "Current Element: " );
         cout << element << endl;
