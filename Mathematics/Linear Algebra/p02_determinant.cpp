@@ -76,8 +76,9 @@ float determinant( vector< vector<float> > matrix, int size ) {
     }
     if ( size == 2 ) {
         printf("F: ");
-        
-        //cout << temp[0] << endl; //first row elements can't be accessed
+        cout << matrix[0][0] << endl;
+        //cout << matrix[1][0] << endl; 
+        //first row elements can't be accessed
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
 
@@ -91,11 +92,14 @@ float determinant( vector< vector<float> > matrix, int size ) {
         }
 
         vector< vector<float> > minor_matrix = minor_in_matrix_form( matrix, 0, i, size );
-        printf("E\n");
+    
+        printf( "Current Element: " );
+        cout << element << endl;
+        printf( "Minor of element:\n" );
         print_matrix( minor_matrix );
-        cout << size - 1 << endl;
+
         result += ((int)pow( -1, i ))  *  element  *  determinant( minor_matrix, size - 1 ); 
-        cout << "RESULT: " << result << endl;
+        //cout << "RESULT: " << result << endl;
     }
 
     return result;
