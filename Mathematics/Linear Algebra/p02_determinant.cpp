@@ -74,7 +74,9 @@ vector< vector<float> > minor_in_matrix_form( vector< vector<float> > matrix, in
             }
         }
 
-        minor_matrix.push_back( matrix_row );
+        if ( matrix_row.size() != 0 ) {
+            minor_matrix.push_back( matrix_row );
+        }
     }
 
     return minor_matrix;
@@ -92,7 +94,7 @@ float determinant( vector< vector<float> > matrix, int size ) {
     }
     if ( size == 2 ) {
         printf("F: ");
-        cout << matrix[0][0] << endl;         //first row elements can't be accessed This line of code crashes the execution
+        //cout << matrix[0][0] << endl;         //first row elements can't be accessed This line of code crashes the execution
         cout << matrix[1][0] << endl; 
         
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
@@ -109,7 +111,6 @@ float determinant( vector< vector<float> > matrix, int size ) {
 
         vector< vector<float> > minor_matrix;
         minor_matrix = minor_in_matrix_form( matrix, 0, i, size );
-        //minor_matrix.resize( size ); // Doesn't help
     
         printf( "Current Element: " );
         cout << element << endl;

@@ -76,7 +76,7 @@ void print_menu() {
 
 int main() {
 
-    int size = 10;
+    const int size = 10;
     string Q[ size ];
     int rear = -1;
     int front = -1;
