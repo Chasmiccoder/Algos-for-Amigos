@@ -27,6 +27,9 @@ This repository contains all the algorithms we have encountered in the fields of
 |||10 - Expression Parser|
 |||11 - Queue Implementation|
 |||12 - Linked List Implementation|
+|||13 - Stacks via Linked List|
+|||14 - Queues via Linked List|
+||||
 |Interview Questions|Language Proficiency|1 - Hello World|
 |||2 - Fizzbuzz|
 |||3 - Print numbers without numbers|
