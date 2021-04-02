@@ -61,7 +61,7 @@ void print_menu() {
 
 int main() {
     
-    int size = 10;
+    const int size = 10;
     string stack[ size ];
     int top = -1;
 
@@ -85,6 +85,7 @@ int main() {
 
         else if ( control == 2 ) {
             string element = pop( stack, &top );
+            
             if ( element != "" ) {
                 printf( "Popped Element: " );
                 cout << element << endl;
