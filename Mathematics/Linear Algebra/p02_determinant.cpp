@@ -1,8 +1,4 @@
 /*
-========================================================
-WORK IN PROGRESS
-========================================================
-
 This code helps find the determinant of any square matrix
 
 Algorithm:
@@ -82,21 +78,14 @@ vector< vector<float> > minor_in_matrix_form( vector< vector<float> > matrix, in
     return minor_matrix;
 }
 
-/*
-Checkout:
-float determinant( const vector< vector<float> >& matrix, int size ) {
-float determinant( vector< vector<float> > const& matrix, int size ) {
-*/
 
 float determinant( vector< vector<float> > matrix, int size ) {
+
+    // Trivially solve the determinant if it is 1x1 or 2x2
     if ( size == 1 ) {
         return matrix[0][0];
     }
     if ( size == 2 ) {
-        printf("F: ");
-        //cout << matrix[0][0] << endl;         //first row elements can't be accessed This line of code crashes the execution
-        cout << matrix[1][0] << endl; 
-        
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
 
@@ -112,11 +101,6 @@ float determinant( vector< vector<float> > matrix, int size ) {
         vector< vector<float> > minor_matrix;
         minor_matrix = minor_in_matrix_form( matrix, 0, i, size );
     
-        printf( "Current Element: " );
-        cout << element << endl;
-        printf( "Minor of element:\n" );
-        print_matrix( minor_matrix );
-
         result += ((int)pow( -1, i ))  *  element  *  determinant( minor_matrix, size - 1 ); 
         //cout << "RESULT: " << result << endl;
     }
