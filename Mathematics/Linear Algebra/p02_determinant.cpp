@@ -12,13 +12,10 @@ Trivially solve 1x1 and 2x2 determinant
 To do this (for element Aij), create a matrix such that the elements are not from the ith row or the jth column
 Then find the determinant of that matrix formed 
 
-(3) Need to implement (1) and (2) with indirect recursion
-
 
 Function minor_in_matrix_form() has been named this way because a minor is the determinant of 
 the matrix formed after removing the rows and columns similar to that of the element whose minor is to be found
 The function doesn't return a minor directly. It returns its matrix instead
-
 
 */
 
@@ -26,12 +23,10 @@ The function doesn't return a minor directly. It returns its matrix instead
 #include <vector>
 #include <math.h>
 
-
 using namespace std;
 
 
 vector< vector<float> > minor_in_matrix_form( vector< vector<float> > matrix, int row, int column, int size );
-
 float determinant( vector< vector<float> > matrix, int size );
 
 
@@ -53,6 +48,10 @@ https://www.youtube.com/watch?v=ie282UTAGxg
 */
 
 vector< vector<float> > minor_in_matrix_form( vector< vector<float> > matrix, int row, int column, int size ) {
+    /*
+    Returns a matrix that corresponds to the minor of an element in a given row and column 
+    */
+    
     if ( size == 1 ) {
         return { {0} };
     }
@@ -80,6 +79,9 @@ vector< vector<float> > minor_in_matrix_form( vector< vector<float> > matrix, in
 
 
 float determinant( vector< vector<float> > matrix, int size ) {
+    /*
+    Returns the determinant of a square matrix with a specified size
+    */
 
     // Trivially solve the determinant if it is 1x1 or 2x2
     if ( size == 1 ) {
@@ -90,6 +92,8 @@ float determinant( vector< vector<float> > matrix, int size ) {
     }
 
     float result = 0;
+
+    // Loop through the first row and find the sum of the cofactors
     for ( int i = 0; i < size; i++ ) {
         float element = matrix[0][i];
 
@@ -102,7 +106,6 @@ float determinant( vector< vector<float> > matrix, int size ) {
         minor_matrix = minor_in_matrix_form( matrix, 0, i, size );
     
         result += ((int)pow( -1, i ))  *  element  *  determinant( minor_matrix, size - 1 ); 
-        //cout << "RESULT: " << result << endl;
     }
 
     return result;
@@ -119,6 +122,7 @@ int main() {
 
     vector< vector<float> > matrix;
 
+    // Taking input from the user:
     printf( "Enter the matrix:\n" );
     for ( int i = 0; i < size; i++ ) {
         vector<float> row;
@@ -132,9 +136,9 @@ int main() {
         matrix.push_back( row );
     }
 
+
     float det = determinant( matrix, size );
     printf( "The determinant of the given matrix is: %.2f\n", det );
-
 
     return 0;
 }
