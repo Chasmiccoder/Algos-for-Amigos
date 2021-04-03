@@ -13,6 +13,7 @@ using namespace std;
 void print_edges( int columns, int max_len ) {
     /*
     Print the edges of the matrix
+    (This function is broken)
     */
     
     printf( "--" );
@@ -20,7 +21,7 @@ void print_edges( int columns, int max_len ) {
     int number_of_spaces = ( max_len * columns ) + ( 3 * (columns-1) ) - format;
     string spaces = string( number_of_spaces, ' ' );
     cout << spaces;
-    printf( "--\n" );
+    //printf( "--\n" );
 }
 
 
