@@ -1,6 +1,9 @@
 ## All the Algorithms you'll ever need xD
 ### Algorithms used in Computer Science, Physics and Mathematics
 
+![Amigos_Banner]()
+
+
 This repository contains all the algorithms we have encountered in the fields of Computer Science, Mathematics and Physics!
 <br><br>
 
