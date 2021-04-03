@@ -15,7 +15,7 @@ This repository contains all the algorithms we have encountered in the fields of
 
 |Domain|Sub-Domain|Topic|
 |:-----|:---------|:----|
-|Data Structures and Algorithms|Sorting|1 - Bubble Sort|
+|1 - Data Structures and Algorithms|Sorting|1 - Bubble Sort|
 |||2 - Selection Sort|
 |||3 - Counting Sort|
 ||Basic Algorithms|4 - Maximum Pairwise Product|
@@ -30,9 +30,14 @@ This repository contains all the algorithms we have encountered in the fields of
 |||13 - Stacks via Linked List|
 |||14 - Queues via Linked List|
 ||||
-|Interview Questions|Language Proficiency|1 - Hello World|
+|2 - Interview Questions|Language Proficiency|1 - Hello World|
 |||2 - Fizzbuzz|
 |||3 - Print numbers without numbers|
+||||
+|3 - Machine Learning|Classification|1 - KNN Classification from Scratch|
+|||2 - Multilayer Perceptron Classification|
+|4 - Assembly Level Programming|Basics|1 - Hello World|
+|||2 - Add 2 Numbers|
 
 <br>
 
