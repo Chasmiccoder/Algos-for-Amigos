@@ -6,11 +6,14 @@ Algorithm:
 
 (1) Find the determinant of the input matrix
 To do this, find the minor of all the elements in the first row (and then add the cofactors to get the result)
-Trivially solve 1x1 and 2x2 determinant
+Trivially solve 1x1 and 2x2 determinant, and use recursion to solve higher order determinants
 
 (2) Find the minor of an element
 To do this (for element Aij), create a matrix such that the elements are not from the ith row or the jth column
-Then find the determinant of that matrix formed 
+Then find the determinant of that matrix formed
+
+This code uses the natural way of solving a determinant along the first row
+It breaks the entire matrix down into fundamental 2x2 matrices and solves the determinant recursively!
 
 
 Function minor_in_matrix_form() has been named this way because a minor is the determinant of 
@@ -39,13 +42,6 @@ void print_matrix( vector<vector<float>> vi ) {
     }
 }
 
-
-/*
-Create a new program p00_matrix_operations.cpp
-and p00_matrix_operations.h
-with the print_matrix and determinant functions, so that they can be reused later
-https://www.youtube.com/watch?v=ie282UTAGxg
-*/
 
 vector< vector<float> > minor_in_matrix_form( vector< vector<float> > matrix, int row, int column, int size ) {
     /*
