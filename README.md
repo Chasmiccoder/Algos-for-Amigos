@@ -1,7 +1,7 @@
 ## All the Algorithms you'll ever need xD
 ### Algorithms used in Computer Science, Physics and Mathematics
 
-![Amigos_Banner](https://github.com/Chasmiccoder/Algos-For-Amigos/blob/master/math_banner_amigos.jpg)
+![Amigos_Banner](https://github.com/Chasmiccoder/Algos-For-Amigos/blob/master/math_banner.jpg)
 
 
 This repository contains all the algorithms we have encountered in the fields of Computer Science, Mathematics and Physics!
