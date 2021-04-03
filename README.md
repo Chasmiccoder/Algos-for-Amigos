@@ -49,7 +49,8 @@ This repository contains all the algorithms we have encountered in the fields of
 |Series|Fundamental Series|1 - Fibonacci Series|
 ||||
 |Linear Algebra|Basics|1 - Print Matrix|
-|||2 - Determinant of a Matrix|
+|||2 - Matrix Multiplication|
+|||3 - Determinant of a Matrix|
 
 
 
