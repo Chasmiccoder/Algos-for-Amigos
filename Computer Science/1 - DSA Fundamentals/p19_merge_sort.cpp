@@ -1,3 +1,37 @@
+/*
+Merge Sort:
+===========
+
+Merge sort involves divide and conquer and recursion. The array is first broken into subarrays with 1 element each
+and then trivially sorted. Two nearby elements merge and get sorted as they merge, via recursive calls. This
+happens in the merge() function. To reach the subarrays, we use the recursive calls from merge_sort()
+Length of the binary tree is n, where n = number of array elements
+Merge sort works using the bottom up approach of sorting
+
+Merge Sort is a Stable Sorting Algorithm, which means that if there are repetitions in the initial array,
+the final array will contain those repititions in the same order.
+
+Example, 
+      5,1,3,2,6,4,8,7
+          /     \
+   5,1,3,2       6,4,8,7
+    /  \           /  \         
+ 5,1    3,2     6,4     8,7   
+ / \    / \     /  \    / \                               
+5   1  3   2   6   4   8   7
+ \ /    \ /     \ /     \ /
+ 1,5    2,3     4,6     7,8
+    \  /           \  /
+   1,2,3,5       4,6,7,8 
+          \     /
+      1,2,3,4,5,6,7,8
+
+
+Time Complexity = O(nlogn)
+Space Complexity = O(n)       Due to the recursive stack calls
+
+*/
+
 #include <iostream>
 #include <limits>
 

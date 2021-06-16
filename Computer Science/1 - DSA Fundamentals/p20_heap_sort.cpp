@@ -44,6 +44,15 @@ This way, the largest elements in the binary tree get eliminated and put at the 
 results in an array sorted in ascending order.
 
 
+Heap Sort is an Unstable Sorting Algorithm, which means that if there are repititions in the initial array,
+the sorted array may not contain those repetitions in the same order.
+Also, heap sort is not as fast as merge sort, or quick sort.
+
+Time Complexity = O(nlogn)
+Space Complexity = O(n)    With the recursive approach
+Space Complexity = O(1)    With the iterative approach
+
+
 */
 
 #include<iostream>
