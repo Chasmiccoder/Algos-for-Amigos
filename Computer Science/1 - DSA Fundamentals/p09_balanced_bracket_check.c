@@ -73,15 +73,29 @@ int check_balanced_bracket( char *string, int len ) {
 }
 
 int main() {
+    printf("\n");
 
     char string[1000];
     printf( "Enter string:\n" );
     gets( string );
     int length = strlen( string );
 
+    printf( "\n" );
+
     int result = check_balanced_bracket( string, length );
 
-    printf( "Result: %d\n", result );
+    if ( result == 0 ) {
+        printf( "Balanced Expression\n");
+    }
+    else if ( result == 1 ) {
+        printf( "Unbalanced Expression\nToo many opening brackets\n" );
+    }
+
+    else {
+        printf( "Unbalanced Expression\nToo many closing brackets\n" );
+    }
+
+    printf( "\n" );
 
     return 0;
 }

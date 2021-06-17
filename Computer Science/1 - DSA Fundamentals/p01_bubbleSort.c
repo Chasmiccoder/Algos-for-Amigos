@@ -1,5 +1,7 @@
 /*
 Program to sort an array into ascending or descending order using Bubble Sort
+Time Complexity = O(n^2)
+Space Complexity = O(1)
 */
 #include <stdio.h>
 
