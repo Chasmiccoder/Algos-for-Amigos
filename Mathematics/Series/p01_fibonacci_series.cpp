@@ -62,6 +62,14 @@ int fib( int n ) {
     return a;
 }
 
+int fib_recursion( int n ) {
+    if ( n <= 1 ) {
+        return n;
+    }
+
+    return fib_recursion(n-1) + fib_recursion(n-2);
+}
+
 
 int last_digit_of_nth_fib_number( int n ) {
     /*
