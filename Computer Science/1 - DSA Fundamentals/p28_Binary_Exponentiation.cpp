@@ -6,6 +6,12 @@ using namespace std;
 /* 
 Computing powers iteratively using Binary Exponentiation
 
+To compute x^n, first we write n in its binary representation. Since n has logn (base 2) digits in its binary representation, 
+we need to perform only logn mulitplications
+Example :----  3^13 = 3^8 * 3^4 * 3^1
+
+
+
 Reference :-- https://cp-algorithms.com/algebra/binary-exp.html
 Time complexity - O(logn)
 Auxiliary space - O(1)
