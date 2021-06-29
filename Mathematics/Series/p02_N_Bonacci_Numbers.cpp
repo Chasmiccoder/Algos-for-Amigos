@@ -24,6 +24,7 @@ the recursive way.
 
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 // mth Fibonacci Number Iterative
 int fib_iterative( int m ) {
@@ -82,6 +83,29 @@ int fib( int m ) {
         return fib( m - 1 ) + fib( m - 2 );
     }
 
+}
+
+
+// mth Fibonacci Number with Dynamic Programming
+int fib_dp( int m, int *memo ) {
+    if ( m < 0 ) {
+        std::cout << "Cannot compute fibonacci number at negative index!\n";
+        exit(-1);
+    }
+
+    if ( m == 0 ) {
+        return 0;
+    }
+
+    if ( memo[m] != 0 ) {
+        return memo[m];
+    }
+
+    else {
+        int tmp = fib( m - 1 ) + fib( m - 2 );
+        memo[m] = tmp;
+        return tmp;
+    }
 }
 
 
@@ -156,6 +180,7 @@ int N_bonacci_iterative_optimized( int N, int m ) {
     for (int i = 0; i < N - 1; i++ ) {
         previous[i] = 0;
     }
+
     previous[N-1] = 1;
     previous[N] = 1;
 
@@ -172,6 +197,50 @@ int N_bonacci_iterative_optimized( int N, int m ) {
 }
 
 
+// mth N-bonacci Number with recursion
+int N_bonacci( int N, int m ) {
+
+    if ( m < N - 1 ) {
+        return 0;
+    }
+
+    else if ( m == N - 1 ) {
+        return 1;
+    }
+
+    else {
+        int tmp = 0;
+        for ( int i = 1; i <= N; i++ ) {
+            tmp += N_bonacci( N, m - i );
+        }
+        return tmp;
+    }
+}
+
+
+// mth N-bonacci Number with Dynamic Programming
+int N_bonacci_dp( int N, int m, int *memo ) {
+
+    if ( m <= N - 1 ) {
+        return memo[m];
+    }
+
+    if ( memo[m] != 0 ) {
+        return memo[m];
+    }
+
+    else {
+        int tmp = 0;
+        for ( int i = 1; i <= N; i++ ) {
+            tmp += N_bonacci( N, m - i );
+        }
+        memo[m] = tmp; 
+        return tmp;
+    }
+}
+
+
+// Driver Code
 int main() {
     std::cout << "N-bonacci Numbers!\n";
     std::cout << "==================\n\n";
@@ -186,7 +255,6 @@ int main() {
     std::cin >> m;
 
     results.push_back( fib_iterative(m) );
-
     std::cout << "The mth Fibonacci Number is: " << results[0] << "\n\n";
 
 
@@ -196,8 +264,18 @@ int main() {
     std::cin >> m;
 
     results.push_back( fib(m) );
-
     std::cout << "The mth Fibonacci Number is: " << results[1] << "\n\n";
+
+    std::cout << "mth Fibonacci Number (recursive, DP):\n";
+
+    std::cout << "Enter the value for m: ";
+    std::cin >> m;
+
+    int *memo1 = new int[m+1];
+    std::memset(memo1,0,m+1);
+    memo1[1] = 1;
+    results.push_back( fib_dp(m, memo1) );
+    std::cout << "The mth Fibonacci Number is: " << results[2] << "\n\n";
 
 
     std::cout << "mth N-bonacci Number (iterative):\n";
@@ -209,8 +287,7 @@ int main() {
     std::cin >> m;
 
     results.push_back( N_bonacci_iterative(N, m) );
-    
-    std::cout << "The mth N-bonacci Number is: " << results[2] << "\n\n";
+    std::cout << "The mth N-bonacci Number is: " << results[3] << "\n\n";
 
 
     std::cout << "mth N-bonacci Number (iterative, optimized):\n";
@@ -220,10 +297,9 @@ int main() {
 
     std::cout << "Enter the value for m: ";
     std::cin >> m;
-
     results.push_back( N_bonacci_iterative_optimized(N, m) );
     
-    std::cout << "The mth N-bonacci Number is: " << results[3] << "\n\n";
+    std::cout << "The mth N-bonacci Number is: " << results[4] << "\n\n";
 
 
     std::cout << "mth N-bonacci Number (recursive):\n";
@@ -234,17 +310,28 @@ int main() {
     std::cout << "Enter the value for m: ";
     std::cin >> m;
 
-    results.push_back( N_bonacci_iterative_optimized(N, m) );
-    
-    std::cout << "The mth N-bonacci Number is: " << results[4] << "\n\n";
+    results.push_back( N_bonacci(N, m) );
+    std::cout << "The mth N-bonacci Number is: " << results[5] << "\n\n";
 
 
-    // To do: Fib DP, N-bonacci Recursive + DP
-    // Write the damn blog
+    // To do: N-bonacci Recursive + DP
+    std::cout << "mth N-bonacci Number (recursive, DP):\n";
 
+    std::cout << "Enter the value for N: ";
+    std::cin >> N;
 
+    std::cout << "Enter the value for m: ";
+    std::cin >> m;
 
+    int *memo = new int[m+1];
+    std::memset(memo,0,m+1);
+    memo[N-1] = 1;
 
+    results.push_back( N_bonacci_dp(N, m, memo) );
+    std::cout << "The mth N-bonacci Number is: " << results[6] << "\n\n";
+
+    std::cout << "================================\n";
+    std::cout << "Thank you for using the program!\n";
     std::cout << "\n\n";
     return 0;
 }
