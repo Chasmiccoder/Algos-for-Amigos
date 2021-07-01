@@ -26,6 +26,7 @@ the recursive way.
 #include <vector>
 #include <cstring>
 
+
 // mth Fibonacci Number Iterative
 int fib_iterative( int m ) {
     /*
@@ -79,10 +80,14 @@ int fib( int m ) {
         return m;
     }
 
+    /*
+    Recursively compute the value (using the mathematical formula) until we get a 'direct' answer
+    Basically, find the sum of the last 2 Fibonacci Numbers. If one, or both of the them are not
+    trivial solutions (m = 0,1), then compute them (via a recursive call) before coming back here.
+    */
     else {
         return fib( m - 1 ) + fib( m - 2 );
     }
-
 }
 
 
@@ -97,13 +102,14 @@ int fib_dp( int m, int *memo ) {
         return 0;
     }
 
+    // If the mth Fibonacci number has already been found, retrieve it from the memo
     if ( memo[m] != 0 ) {
         return memo[m];
     }
 
     else {
-        int tmp = fib( m - 1 ) + fib( m - 2 );
-        memo[m] = tmp;
+        int tmp = fib_dp( m - 1, memo ) + fib_dp( m - 2, memo );
+        memo[m] = tmp; // Store the calculated result in memo for future use
         return tmp;
     }
 }
@@ -113,12 +119,12 @@ int fib_dp( int m, int *memo ) {
 int N_bonacci_iterative( int N, int m ) {
 
     int previous[N];
-
-    for (int i = 0; i < N - 1; i++ ) {
-        previous[i] = 0;
-    }
+    
+    // Set the first N-1 elements as 0, and the (N-1)th as 1
+    std::memset(previous, 0, sizeof(previous));
     previous[N-1] = 1;
-
+    
+    // If m is smaller than N, the answer is either 0 or 1
     if ( m < N ) {
         return previous[m];
     }
@@ -127,16 +133,19 @@ int N_bonacci_iterative( int N, int m ) {
 
     for ( int i = N; i <= m; i++ ) {
 
+        // Compute the result by finding the sum of the last N elements in the series
         result = 0;
         for ( int j = 0; j < N; j++ ) {
             result += previous[j];
         }
 
+        // Shift all elements towards the left
         for( int k = 0; k < N - 1; k++ ) {
             previous[k] = previous[k+1];
         }
-        previous[N - 1] = result;
 
+        // Store the current intermediate result, so that we can use it in the next iteration
+        previous[N - 1] = result;
     }
 
     return result;
@@ -148,7 +157,7 @@ int N_bonacci_iterative_optimized( int N, int m ) {
     /*
     We can store all the results in the array previous itself so that 
     we won't have to replenish it (by moving elements one step back)
-    This cuts down the logic from O(n^2) to O(n)
+    This cuts down the time complexity from O(n^2) to O(n)
 
     Also, we do not need to 're-calculate' the sum of the past N numbers to get the next one.
     For example, for N = 2, m = 8
@@ -163,7 +172,7 @@ int N_bonacci_iterative_optimized( int N, int m ) {
     0 0 0 0 1 1 2 4 8 16 31 61
     The answer should be 61 = 2 + 4 + 8 + 16 + 31
     Previous result 31 = 1 + 2 + 4 + 8 + 16 
-    Computing 61, from the previous result 61 = 31 - 1 + 31
+    Computing 61, from the previous result 61 = 31 - 1 + 31 = 2(31) - 1
 
     */ 
 
@@ -181,16 +190,12 @@ int N_bonacci_iterative_optimized( int N, int m ) {
         previous[i] = 0;
     }
 
+    // Intial Elements:
     previous[N-1] = 1;
     previous[N] = 1;
-
-    int result = 1;
     
     for ( int i = N; i < m; i++ ) {
-        
-        int before_N = previous[ i - N ];
-        previous[ i+1 ] = previous[ i ] - before_N + previous[ i ];
-        
+        previous[ i+1 ] = 2 * previous[ i ] - previous[ i - N ];
     }
 
     return previous[m];
@@ -200,6 +205,7 @@ int N_bonacci_iterative_optimized( int N, int m ) {
 // mth N-bonacci Number with recursion
 int N_bonacci( int N, int m ) {
 
+    // If m is lesser than or equal to N - 1, the solution is trivial
     if ( m < N - 1 ) {
         return 0;
     }
@@ -209,6 +215,12 @@ int N_bonacci( int N, int m ) {
     }
 
     else {
+        /*
+        Create a temporary variable, and store the sum of the previous N
+        elements, by making N recursive calls. If it finds a trivial solution,
+        it returns that (the above base cases). Otherwise, it searches for it,
+        through more recursive calls
+        */
         int tmp = 0;
         for ( int i = 1; i <= N; i++ ) {
             tmp += N_bonacci( N, m - i );
@@ -225,6 +237,7 @@ int N_bonacci_dp( int N, int m, int *memo ) {
         return memo[m];
     }
 
+    // If the result has been computed already, retrieve it.
     if ( memo[m] != 0 ) {
         return memo[m];
     }
@@ -232,9 +245,9 @@ int N_bonacci_dp( int N, int m, int *memo ) {
     else {
         int tmp = 0;
         for ( int i = 1; i <= N; i++ ) {
-            tmp += N_bonacci( N, m - i );
+            tmp += N_bonacci_dp( N, m - i, memo );
         }
-        memo[m] = tmp; 
+        memo[m] = tmp;  // memoization
         return tmp;
     }
 }
@@ -271,10 +284,11 @@ int main() {
     std::cout << "Enter the value for m: ";
     std::cin >> m;
 
-    int *memo1 = new int[m+1];
-    std::memset(memo1,0,m+1);
-    memo1[1] = 1;
-    results.push_back( fib_dp(m, memo1) );
+    int memo_1[ m + 1 ];  
+    std::memset( memo_1, 0, sizeof(memo_1) );
+    memo_1[1] = 1;
+
+    results.push_back( fib_dp( m, memo_1 ) );
     std::cout << "The mth Fibonacci Number is: " << results[2] << "\n\n";
 
 
@@ -286,7 +300,7 @@ int main() {
     std::cout << "Enter the value for m: ";
     std::cin >> m;
 
-    results.push_back( N_bonacci_iterative(N, m) );
+    results.push_back( N_bonacci_iterative( N, m ) );
     std::cout << "The mth N-bonacci Number is: " << results[3] << "\n\n";
 
 
@@ -297,7 +311,7 @@ int main() {
 
     std::cout << "Enter the value for m: ";
     std::cin >> m;
-    results.push_back( N_bonacci_iterative_optimized(N, m) );
+    results.push_back( N_bonacci_iterative_optimized( N, m ) );
     
     std::cout << "The mth N-bonacci Number is: " << results[4] << "\n\n";
 
@@ -310,7 +324,7 @@ int main() {
     std::cout << "Enter the value for m: ";
     std::cin >> m;
 
-    results.push_back( N_bonacci(N, m) );
+    results.push_back( N_bonacci( N, m ) );
     std::cout << "The mth N-bonacci Number is: " << results[5] << "\n\n";
 
 
@@ -323,11 +337,12 @@ int main() {
     std::cout << "Enter the value for m: ";
     std::cin >> m;
 
-    int *memo = new int[m+1];
-    std::memset(memo,0,m+1);
+    // int *memo = new int[m+1];
+    int memo[ m + 1 ];
+    std::memset( memo, 0, sizeof(memo) );
     memo[N-1] = 1;
 
-    results.push_back( N_bonacci_dp(N, m, memo) );
+    results.push_back( N_bonacci_dp( N, m, memo ) );
     std::cout << "The mth N-bonacci Number is: " << results[6] << "\n\n";
 
     std::cout << "================================\n";
