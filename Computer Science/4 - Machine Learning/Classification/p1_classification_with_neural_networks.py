@@ -3,7 +3,7 @@ Machine Learning Task -
 Binary Classification of Bike Sharing Service Data, after appropriate Data Processing
 
 We will be Using Multilayer Perceptron for this Binary Classification
-A Multilayer Perceptron is a feedforward Artificial Neural Network.
+A Multilayer Perceptron is a feedforward Artificial Neural Network
 Algorithm Implemented with Libraries
 """
 import time 

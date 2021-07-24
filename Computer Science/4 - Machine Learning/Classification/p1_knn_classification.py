@@ -17,7 +17,7 @@ def check( ):
 
 
 def print_progress_bar( size ):
-    print( " " * size, end='' )
+    print( " " * int(size), end='' )
     print( "<-Needs to Reach Here" )
 
 
@@ -126,7 +126,7 @@ def shuffle_dataset( dataset, datapoints ):
 
 
 """---MAIN---""" 
-csv_file   = open( "Bike_Data.csv" )
+csv_file   = open( "p1_Bike_Data.csv" )
 csv_reader = csv.reader( csv_file, delimiter = ',' )
 
 line_count = 0
@@ -223,7 +223,6 @@ for i in range( test_size ):
         list_of_distances.append( distance )
         list_of_classes.append( voting_class )
     
-    #special_sort( list_of_distances )
     # Sorting the list of clases according to the list of distances
     list_of_classes = [ x for _,x in sorted( zip( list_of_distances, list_of_classes) ) ]
 
@@ -273,3 +272,11 @@ start_station_31020 column will be 0. Else it will be 1.
 
 end_time = time.time()
 print( "Run Time: ", end_time - start_time )
+
+# current model: (with One Hot Encoding)
+# Run Time: 1409 seconds (about 23 minutes, 30 seconds)
+# Accuracy: 88%
+
+# Without One Hot Encoding, we get the same accuracy, and run time is reduced
+# Run Time: 192 seconds
+# Accuracy = 88%
