@@ -71,7 +71,7 @@ def one_hot_encoding( dataset, feature, feature_index ):
     new_dataset = [ ]
     for row in dataset:
         for value in feature:
-            #print( "TYPE: ", type(row[ feature_index ]), type(value))
+
             if row[ feature_index ] == value: 
                 row.append( 1 )
             else:
@@ -126,7 +126,7 @@ def shuffle_dataset( dataset, datapoints ):
 
 
 """---MAIN---""" 
-csv_file   = open( "p1_Bike_Data.csv" )
+csv_file   = open( "p2_Bike_Data.csv" )
 csv_reader = csv.reader( csv_file, delimiter = ',' )
 
 line_count = 0
