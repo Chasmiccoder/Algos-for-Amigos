@@ -82,6 +82,7 @@ void update(struct Element **hashTable, int key, int value, int size) {
     return;
 }
 
+
 int findNextPrime(int n) {
     /*
     Return the first prime number that is equal to or greater than n
