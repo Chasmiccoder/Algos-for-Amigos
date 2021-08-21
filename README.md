@@ -1,7 +1,9 @@
 ## All the Algorithms you'll ever need xD
 ### Algorithms used in Computer Science, Physics and Mathematics
 
-![Amigos_Banner](./math_banner.jpg)
+<!-- ![Amigos_Banner](./math_banner.jpg) -->
+
+<img src="./math_banner.jpg" width="960" height="480" alt="Amigos Banner">
 
 
 This repository contains all the algorithms we have encountered in the fields of Computer Science, Mathematics and Physics!
@@ -123,3 +125,25 @@ right click on folder, and click on Generate To Tree
 
 
 
+<!--
+```bash
+├── app
+│   ├── css
+│   │   ├── **/*.css
+│   ├── favicon.ico
+│   ├── images
+│   ├── index.html
+│   ├── js
+│   │   ├── **/*.js
+│   └── partials/template
+├── dist (or build)
+├── node_modules
+├── bower_components (if using bower)
+├── test
+├── Gruntfile.js/gulpfile.js
+├── README.md
+├── package.json
+├── bower.json (if using bower)
+└── .gitignore
+```
+ ???? -->
