@@ -1,7 +1,7 @@
 
 <!-- ![Amigos_Banner](./math_banner.jpg) -->
 
-<img src="./algos_for_amigos_logo.png" width="720" height="270" alt="Amigos Banner">
+<img src="./algos_for_amigos_logo.png" alt="Amigos Banner">
 
 ## All the Algorithms you'll ever need xD
 
