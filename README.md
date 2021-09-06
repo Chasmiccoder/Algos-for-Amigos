@@ -1,6 +1,3 @@
-
-<!-- ![Amigos_Banner](./math_banner.jpg) -->
-
 <img src="./algos_for_amigos_logo.png" alt="Amigos Banner">
 
 ## All the Algorithms you'll ever need xD
