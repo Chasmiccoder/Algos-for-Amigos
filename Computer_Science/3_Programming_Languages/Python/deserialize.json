@@ -1,0 +1,9 @@
+{
+    "name": "Rick",
+    "isStudent": true,
+    "friends": ["Harry", "Jones"],
+    "bankAccount": null,
+    "degree": {
+        "Computer Science": ["Data Structures", "Advanced Algorithms"]
+    }
+}

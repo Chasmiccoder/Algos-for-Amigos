@@ -1,0 +1,25 @@
+let test = {
+    "John": {
+        "number" : "+61 2 3617 9451",
+        "age" : 19,
+        "address" : [
+            "10/365 Pacific Highway, Hornsby,",
+            "Sydney, New South Wales,",
+            "Australia - 2077."
+        ]
+    },
+    "Ravi" : {
+        "number" : "+91 9972354015",
+        "age" : 21,
+        "address" : [
+            "110 New Vora House,", 
+            "Koramangala",
+            "Bengaluru, Karnataka",
+            "India - 560078."
+        ]
+    }
+};
+
+console.log("Details of John: ", test["John"]);
+console.log("Ravi's Age: ", test["Ravi"]["age"]);
+
