@@ -7,7 +7,7 @@ https://codeforces.com/problemset/problem/731/A
 #include <string.h>
 #include <stdlib.h>
 
-int min(int a, int b) {
+int min1(int a, int b) {
     if ( a < b ) {
         return a;
     }
@@ -28,7 +28,7 @@ int main() {
     for ( int i = 0; i < len; i++ ) {
         int place = word[i] - 97;
 
-        count += min( abs(place - pos), abs(26 - abs(place - pos)) );
+        count += min1( abs(place - pos), abs(26 - abs(place - pos)) );
 
         // Update the previous letter
         pos = place;
