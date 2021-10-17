@@ -52,15 +52,6 @@ Problem Specific Funcs
 =======================
 */
 
-void removeDigit(string& s, int index) {
-    s = s.substr(index,1);
-    if(index == s.length()) {
-        while(s[s.length()-1] == '0') {
-            s = s.substr(s.length()-1,1);
-        }
-    }
-}
-
 // When we know that there is at least one Zero
 // Final answer = 0
 int onlyZero(string s, int index) {
