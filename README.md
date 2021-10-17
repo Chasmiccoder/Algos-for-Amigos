@@ -5,36 +5,56 @@
 This repository contains all the algorithms we have encountered in the fields of Computer Science, Mathematics and Physics!
 <br><br>
 
-## Computer Science
+### Contents -
 
-📂1_DSA_Fundamentals<br>
-  ┣ 📂1_Sorting_Algorithms<br>
-  ┣ 📂2_Stacks_Queues_Linked_Lists<br>
-  ┗ 📂3_Graphs<br>
 
-📂2_Competitive_Programming<br>
- 
-📂3_Programming_Languages<br>
-  ┣ 📂C<br>
-  ┗ 📂Python<br>
+```
+Algos for Amigos
+├── Computer Science  
+│   │
+│   ├── DSA Fundamentals  
+│   │   ├── Sorting  
+│   │   ├── Stacks, Queues, Linked Lists  
+│   │   └── Graphs  
+│   │
+│   ├── Competitive Programming  
+│   │   ├── Codeforces  
+│   │   └── Leetcode  
+│   │
+│   ├── Programming Languages
+│   │   ├── C
+│   │   ├── C++
+│   │   └── Python
+│   │
+│   ├── Object Oriented Programming
+│   │
+│   ├── Interview Questions 
+│   │
+│   ├── Machine Learning
+│   │   └── Classification
+│   │
+│   ├── Database Management Systems
+│   │
+│   ├── Assembly Level Programming
+│   │
+│   ├── Advanced Algorithms
+│   │
+│   └── Cryptography
+│       ├── Base64 Encoder Decoder
+│       ├── Caesar Cipher
+│       ├── Cracking RSA Encryption
+│       └── Vigenere Cipher
+│
+├── Mathematics
+│   │
+│   ├── Linear Algebra
+│   └── Series
+│
+└── Quantum Computing
+    └── Fundamentals
 
-📂4_Object_Oriented_Programming<br>
-
-📂5_Interview_Questions<br>
-   
-📂6_Machine_Learning<br>
-   ┗ 📂Classification<br>
-
-📂7_Assembly_Level_Programming<br>
-
-<br>
-
-## Mathematics
-
-📂Linear Algebra<br>
-
-📂Series<br>
-
+```
+  
 <br>
 
 
