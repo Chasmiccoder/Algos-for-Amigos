@@ -41,5 +41,4 @@ function change(ch, key){  // function to shift alphabets according to the key v
             return (String.fromCharCode(no))
         }
     }
-
 }
