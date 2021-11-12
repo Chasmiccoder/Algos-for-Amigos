@@ -1,36 +1,13 @@
 """
 
-Ideally, you want to pick a relatively small value for e.
-This is to make encryption faster (without worrying about losing encryption strength)
-That way, d will be really large, which makes it harder to guess.
-
-Current status of encryption -
-Algorithms like AES and RSA are still used extensively. Now, while Elliptic Curve Cryptography is 
-replacing RSA in many scenarios, the encryption is still symmetric, which means that we first need to
-pass the private keys via communication channels which may or may not be secure. 
-
-This is why things like SSH certificates still use RSA. Infact, we can use RSA to establish 
-a secure channel and then exchange keys involving more powerful encryption algorithms.
-
-Algos like DES, SHA, and Blowfish are also some of the popular encryption protocols used today.
-
 """
-
-
-
-# Euclid's GCD Algorithm
-def gcd(x,y):
-    if x == 0:
-        return y
-    return gcd(y%x, x)
-
 
 
 # Pick 2 prime numbers P and Q (must be large)
 
 # Secret values talk about the character limit and show it will smaller primes
-# p = 2
-# q = 7
+p = 13
+q = 17
 
 # p = 719
 # q = 457
@@ -72,6 +49,7 @@ phi = (p-1) * (q-1)
 
 
 e = pow(2,16) + 1
+# e = 5 # For 13,17
 
 publicKey = [e,N]
 
@@ -117,18 +95,6 @@ def extended_gcd(phi, e):
 d = extended_gcd(phi,e) # is called the inverse (multiplicative inverse of e mod phi)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 # print(66**d % phi)
 print("RSA Key Elements:")
 print("N:", N)
@@ -140,6 +106,7 @@ print("phi:", phi, end="\n\n")
 # plaintext = "HelloWorld"
 # plaintext = "B"
 plaintext = "hello, World! 1234567890 @#$%^&*()" # Won't work for unicode characters like the rupee symbol
+
 print("Plaintext: ", plaintext)
 
 def encrypt(plaintext):
@@ -197,42 +164,3 @@ def decrypt(ciphertext):
 
 new_message = decrypt(ciphertext) 
 print("Answer: ", new_message)
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

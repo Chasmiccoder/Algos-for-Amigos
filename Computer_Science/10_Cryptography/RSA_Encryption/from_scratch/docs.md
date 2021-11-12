@@ -1,9 +1,39 @@
 Do rsa explanation
 
 
+Ideally, you want to pick a relatively small value for e.
+This is to make encryption faster (without worrying about losing encryption strength)
+That way, d will be really large, which makes it harder to guess.
+
+Current status of encryption -
+Algorithms like AES and RSA are still used extensively. Now, while Elliptic Curve Cryptography is 
+replacing RSA in many scenarios, the encryption is still symmetric, which means that we first need to
+pass the private keys via communication channels which may or may not be secure. 
+
+This is why things like SSH certificates still use RSA. Infact, we can use RSA to establish 
+a secure channel and then exchange keys involving more powerful encryption algorithms.
+
+Algos like DES, SHA, and Blowfish are also some of the popular encryption protocols used today.
+
+
+
+
+Why Python is making our life simpler:
+    You can't store a 300 digit number in a variable in C, C++ and many other languages, so to store
+    these numbers you need to use arrays. 
+    The largest integer you can store in long long datatype is 9223372036854775807
+
+    In Python, however, supports arbitrary precision of integers. It can handle numbers as large as 
+    those that can be supported by your memory :) 
+
 Talk about how the strings we can encrypt are limited.
 Won't work for rupee symbol
 print(u"\u20B9") will not work
+
+
+# plaintext = str( int(ciphertext)**d % N ) #don't do it this way!!
+
+app.py is basically a menu driver program
 
 Limitations of RSA -
 We can't encrypt data that is larger in size than the key size
@@ -27,3 +57,20 @@ In summary, to send larger messages, you need a larger modulus, and since the mo
 to be finite, there is a limit to the size of the message we can send.
 
 short note on attacks
+
+
+
+Resources + References:
+=======================
+
+To get large primes
+https://bigprimes.org/
+
+If you want to revise the whole algo (especially for Euclid's Algo)
+https://www.youtube.com/watch?v=Z8M2BTscoD4
+
+Further Reading:
+================
+
+How to generate large primes from scratch
+https://www.geeksforgeeks.org/how-to-generate-large-prime-numbers-for-rsa-algorithm/
