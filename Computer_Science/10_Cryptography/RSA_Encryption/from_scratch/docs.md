@@ -74,3 +74,9 @@ Further Reading:
 
 How to generate large primes from scratch
 https://www.geeksforgeeks.org/how-to-generate-large-prime-numbers-for-rsa-algorithm/
+
+Amazing Extensive Website
+https://www.di-mgt.com.au/rsa_alg.html#:~:text=n%20is%20known%20as%20the,secret%20exponent%20or%20decryption%20exponent%20.
+
+Breaking RSA
+https://www.quintessencelabs.com/blog/breaking-rsa-encryption-update-state-art/#:~:text=It%20would%20take%20a%20classical,RSA%2D2048%20bit%20encryption%20key.

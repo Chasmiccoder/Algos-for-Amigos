@@ -109,7 +109,7 @@ def encrypt(plaintext, publicKey):
             ch = "0" + str(ch)
         else:
             ch = str(ch)
-    
+        
         ciphertext += ch
     
     ciphertext = str( pow( int(ciphertext), e, N ) )

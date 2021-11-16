@@ -1,8 +1,3 @@
-"""
-
-"""
-
-
 # Pick 2 prime numbers P and Q (must be large)
 
 # Secret values talk about the character limit and show it will smaller primes
@@ -49,7 +44,7 @@ phi = (p-1) * (q-1)
 
 
 e = pow(2,16) + 1
-# e = 5 # For 13,17
+e = 5 # For 13,17
 
 publicKey = [e,N]
 
@@ -104,7 +99,7 @@ print("phi:", phi, end="\n\n")
 
 
 # plaintext = "HelloWorld"
-# plaintext = "B"
+# plaintext = "Ba"
 plaintext = "hello, World! 1234567890 @#$%^&*()" # Won't work for unicode characters like the rupee symbol
 
 print("Plaintext: ", plaintext)
