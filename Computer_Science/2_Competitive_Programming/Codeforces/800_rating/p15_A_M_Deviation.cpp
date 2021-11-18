@@ -1,14 +1,49 @@
 /*
 Problem Link:
+https://codeforces.com/problemset/problem/1605/A
 
 Problem Statement:
+A number a2 is said to be the arithmetic mean of two numbers a1 and a3, 
+if the following condition holds: a1 + a3 = 2 * a2
+We define an arithmetic mean deviation of three numbers a1, a2 and a3 as follows: d(a1,a2,a3) = |a1 + a3 - 2 * a2|
 
+Arithmetic means a lot to Jeevan. 
+He has three numbers a1, a2 and a3 and he wants to minimize the arithmetic mean deviation d(a1,a2,a3). 
+To do so, he can perform the following operation any number of times (possibly zero):
+    Choose i,j from {1,2,3} such that i !=j and increment ai by 1 and decrement aj by 1
+
+What is the minimum value of the arithmetic mean deviation
 
 Input:
-
+13
+3 4 5
+2 2 6
+1 6 5
+1 1 1
+1 1 2
+1 1 3
+1 1 4
+1 1 5
+1 1 6
+1 1 7
+1 1 8
+1 1 9
+1 1 10
 
 Output:
-
+0
+1
+0
+0
+1
+1
+0
+1
+1
+0
+1
+1
+0
 
 */
 
@@ -132,8 +167,14 @@ Problem Specific Funcs
 =======================
 */
 
-int solve(string keyboard, string word) {
+int solve() {
+    int a1,a2,a3;
+    cin >> a1 >> a2 >> a3;
 
+    int result = abs(a1 + a3 - 2 * a2) % 3;
+    if(result == 2)
+        result = 1;
+    return result;
 }
 
 
@@ -168,13 +209,7 @@ int main() {
     cin >> testcases;
     for(int test = 0; test < testcases; test++) {
 
-        string keyboard,word;
-        cin >> keyboard;
-        // vector<int> vi = inpV<int>(n);
-        cin >> word;
-
-        int ans = solve(keyboard,word);
-
+        int ans = solve();
         cout << ans << "\n";
     }
 
@@ -184,6 +219,20 @@ int main() {
 
 /*
 Observations -
+
+It won't matter if (i = 1 and j = 3) or (i = 3 and j = 1)
+Therefore, 2 must be involved.
+
+When a1 is incremented and a2 is decremented
+a1 + a3 + 1 - 2 * (a2 - 1) = a1 + a3 - 2 * a2 + 3
+
+When a1 is decremented and a2 is incremented
+a1 + a3 - 1 - 2 * (a2 + 1) = a1 + a3 - 2 * a2 - 3
+
+Either + 3 or - 3 get added in each move.
+
+Find minimum using (mod 3)
+If the answer is 2, return 1, since we can subtract 3 from it to get -1, and abs(-1) = 1
 
 */
 
