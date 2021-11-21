@@ -1,12 +1,27 @@
+/*
+Think of sizes as a wheel. If there's overflow, the variable gets assigned according
+to how this wheel gets rotated.
+*/
+
 #include <stdio.h>
 #include <limits.h>
 
 int main() {
 
+    printf("Size of integer in bytes: %d\n", sizeof(int));
+
     int var1 = INT_MIN;
     int var2 = INT_MAX;
 
     printf("Range of integer is from %d to %d\n", var1, var2);
+
+    /*
+    Unsigned Integer range is from 0 to 4294967295
+    This is because int datatype is allocated 4 bytes of space (32 bits)
+    and 2^32 = 4294967296
+
+    Signed range is from [-2^31, 2^31 - 1]
+    */
 
     unsigned int var3 = 0;
     unsigned int var4 = UINT_MAX;
