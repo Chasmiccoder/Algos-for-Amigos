@@ -8,6 +8,7 @@ This repository contains all the algorithms we have encountered in the fields of
 ### Contents -
 
 
+<!--
 ```
 Algos for Amigos
 ├── Computer Science  
@@ -51,6 +52,43 @@ Algos for Amigos
 │   └── Series
 │
 └── Quantum Computing
+    └── Fundamentals
+
+```
+-->
+
+```
+Algos for Amigos
+├── Computer Science  
+│   │
+│   ├── DSA Fundamentals  
+│   │   ├── Sorting  
+│   │   ├── Stacks, Queues, Linked Lists  
+│   │   └── Graphs  
+│   │
+│   ├── Programming Languages
+│   │   ├── C
+│   │   ├── C++
+│   │   └── Python
+│   │
+│   ├── Machine Learning
+│   │   └── Supervised Learning
+│   │       └── Classification
+│   │
+│   └── Cryptography
+│       ├── Base64
+│       ├── Caesar Cipher
+│       ├── Hex
+│       ├── RSA
+│       └── Vigenere Cipher
+│
+├── Mathematics
+│   │
+│   ├── Linear Algebra
+│   └── Series
+│
+└── Quantum Computing
+    └── Experiments
     └── Fundamentals
 
 ```
