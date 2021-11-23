@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+.maindiv{
+    width: 100%;
+    height: 100vh;
+    background:rgb(9, 3, 49);
+    position: relative;
+
+}
+.card{
+    background: linear-gradient(to right,#039be5,#45ABE4);
+    
+    width: 400px;
+    min-height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 50px;
+    border-radius: 5px;
+    
+
+}
+h1{
+    margin-bottom: 30px;
+    color: white;
+    text-align: center;
+
+
+}
+.option1{
+    position: relative;
+}
+.card .option1 input{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    
+
+}
+.card .option1 label{
+    margin-bottom: 10px;
+    color: white;
+    padding-bottom: 30px;
+}
+.card #bttn{
+    background:rgb(9, 3, 49) ;
+    position: relative;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    left: 35%;
+    /* margin-left: 100px; */
+}
+#bttn:hover {
+    background-color: white;
+    color:rgb(9, 3, 49) ;
+  }
+@media only screen and (max-width: 400px) {
+    .card{
+        width: 300px;
+    }
+    
+}

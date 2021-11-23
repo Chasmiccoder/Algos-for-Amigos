@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexadecimal to ASCII Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="maindiv">
+
+        <div class="card">
+            <h1>Hexadecimal to ASCII Converter</h1>
+            <form id="myapp">
+                <div class="option1">
+
+                    <label>Hexadecimal</label>
+                    <input type="text" id="inputnum" oninput="hex_to_ascii()">
+                </div>
+                <div class="option1">
+                    <label>ASCII</label>
+                    <input type="text" id="output" oninput="ascii_to_hex()">
+                </div>
+
+                <button type="reset" id="bttn">Reset</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="./index.js"></script>
+</body>
+
+</html>
