@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+int T1 = 0;
+int T2;
+
 int main() {
     // char can hold 1 byte
     char c = 65;
@@ -30,5 +33,34 @@ int main() {
     c = 255;
     printf("-128: %c\n", c); // both print a space ' '
 
+    {
+        char c2 = 20;
+    }
+    
+    // printf("%c\n", c2); // error, since c2 exists only within the above block 
+    
+    printf("T1: %d\n", T1);
+    // printf("%d\n", T); // 'T' undeclared error (even though it is declared in global scope, after main)
+    
+    
+    // In this scenario, T2 is defined in global scope, before main; but its assigned a value after main (in global scope)
+    printf("T2: %d\n", T2);
+    // Interestingly, this prints 5 (which is the assigned value)
+    // But it also gives a data definition warning (as if it has been redefined after main)
+
+
+    int var1 = 0;
+    {
+        int var1 = 2;
+        printf("Inner Block: %d\n", var1);
+    }
+    printf("Outer Block: %d\n", var1);
+
+
+
     return 0;
 }
+
+
+int T = 2;
+T2 = 5;
