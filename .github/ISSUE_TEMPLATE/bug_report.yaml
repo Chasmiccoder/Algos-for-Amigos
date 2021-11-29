@@ -6,14 +6,14 @@ body:
     id: bug-description
     attributes:
       label: Bug Description
-      description: Tell us what went wrong
-      placeholder: "A clear and concise description of what the bug is"
+      description: Tell us what went wrong (including what triggered the bug)
+      placeholder: "A clear and concise description of what the bug is, and the steps to reproduce it"
     validations:
       required: true
   - type: textarea
-    id: to-reproduce
+    id: code-to-reproduce
     attributes:
-      label: To Reproduce
+      label: Code to Reproduce the Bug
       description: Please provide a minimal working example. Paste your code directly (It will be automatically formatted, so there's no need for backticks)
       placeholder: "from qutip import identity\nprint(identity(2))"
       render: shell
@@ -21,7 +21,7 @@ body:
     id: bug-output
     attributes:
       label: Code Output
-      description: Please paste the relevant output here (It will be automatically formatted, so there's no need for backticks)
+      description: Please paste the relevant output here (automatically formatted)
       placeholder: "Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\nQobj data =\n[[1. 0.]\n[0. 1.]]"
       render: shell
   - type: textarea
@@ -36,7 +36,7 @@ body:
     id: your-environment
     attributes:
       label: Your Environment
-      description: Please use `qutip.about()` to get the information about your environment and paste it here
+      description: Please use `qutip.about()` to get the information about your environment and paste it here (automatically formatted)
       placeholder: "QuTiP Version:      ***\nNumpy Version:      ***\nScipy Version:      ***\nCython Version:     ***\nMatplotlib Version: ***\nPython Version:     ***\nNumber of CPUs:     ***\nBLAS Info:          ***\nOPENMP Installed:   ***\nINTEL MKL Ext:      ***\nPlatform Info:      ***"
       render: shell
     validations:
@@ -45,8 +45,8 @@ body:
     id: additional-context
     attributes:
       label: Additional Context
-      description: Add any other context about the problem here. You can include images, plots, etc.
-      placeholder: "More context, images, graphs, plots, etc."
+      description: Add anything else you want to tell us. You can include images, plots, etc.
+      placeholder: "Additional information, images, graphs, plots, etc."
   - type: markdown
     id: thank-you
     attributes:
