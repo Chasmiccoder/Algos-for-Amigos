@@ -12,7 +12,7 @@ def wait():
 
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import Qobj, basis, fock, coherent, fock_dm, coherent_dm, thermal_dm, sigmax, sigmay, sigmaz, destroy, create
+from qutip import Qobj, basis, fock, coherent, fock_dm, coherent_dm, thermal_dm, sigmax, sigmay, sigmaz, destroy, create, qeye, tensor
 
 
 """
@@ -124,6 +124,88 @@ print("Position Operator (generated using the annihilation operator):\n", x)
 
 wait()
 
+# Commutation relations (represented by [op1, op2])
+def commutator(op1, op2):
+    return op1*op2 - op2*op1
+
+a = destroy(5)
+print("Commutator of Annihilation and Creation Operators [a, a.dag()]:\n", commutator( a, a.dag() ) )
+print()
+# We don't get an identity matrix because we have truncated the hilbert space
+# (Should be okay if highest Fock State is not involved)
+
+# Checking if both momentum and position operators commute
+x = (a + a.dag()) / pow(2, 0.5)
+p = (a - a.dag()) / pow(2, 0.5) * (-1j)
+print("Checking if both momentum and position operators commute [x,p]:\n", commutator(x,p))
+
+
+wait()
+
+
+# Trying Pauli Spin Inequalities
+print("Verifying Pauli Spin Inequalities:")
+
+# [sigmax, sigmay] = 2 . i . sigmaz
+print("[sigmax, sigmay] - 2 . i . sigmaz = 0\n", commutator(sigmax(), sigmay()) - 2j*sigmaz() )
+print()
+
+# -i . sigmax . sigmay . sigmaz = 1
+print("-i . sigmax . sigmay . sigmaz = 1\n", -1j * sigmax() * sigmay() * sigmaz() )
+print()
+
+# sigmax^2 = sigmay^2 = sigmaz^2 = 1
+print("sigmax^2 = sigmay^2 = sigmaz^2 = 1\n", sigmax()**2 == sigmay()**2 == sigmaz()**2 == qeye(2))
+print()
+# qeye(2) is the 2x2 identity matrix
+
+
+wait()
+
+
+"""
+                    --- Composite Systems ---
+(Multi Qubit Systems)
+"""
+
+print("2 Qubit Composite System:\n")
+
+sz1 = tensor(sigmaz(), qeye(2)) 
+print("Creating an operator that does Sigma Z on the first qubit, but leaves the second qubit as it:\n", sz1)
+print()
+# For an operator that leaves the first qubit, and does Sigma Z on the second,  tensor(qeye(2), sigmaz()) 
+
+
+psi1 = tensor(basis(2,1), basis(2,0))
+print("Wave function where only first qubit is excited:\n", psi1)
+print()
+
+print("Action of the above operator on this wave function (excited first qubit):\n", sz1 * psi1)
+print()
+
+psi2 = tensor(basis(2,0), basis(2,1))
+print("Wave function where only second qubit is excited:\n", psi2)
+print()
+
+print("Action of the above operator on this wave function (excited second qubit):\n", sz1 * psi2)
+print()
+
+# Therefore, sz1 * psi1 != psi1 and sz1 * psi2 == psi2  as expected
+
+wait()
+
+print("Coupling Term with tensor(sigmax, sigmax):\n", tensor(sigmax(), sigmax()))
+print()
+
+print("Coupled Two Qubit Hamiltonian,   H = e1 . sigmaz(1) + e2 . sigmaz(2) + g . sigmax(1)sigmax(2)")
+epsilon = [1.0, 1.0]
+g = 0.1
+
+sz1 = tensor(sigmaz(), qeye(2) )
+sz2 = tensor(qeye(2) , sigmaz())
+
+H = epsilon[0] * sz1   +   epsilon[1] * sz2   +   g * tensor(sigmax(), sigmax())
+print(H)
 
 
 

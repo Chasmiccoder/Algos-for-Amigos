@@ -16,8 +16,9 @@ function encrypt(){
     bstring = toBinary(plain)
     cipher = btoa(bstring)
     console.log(cipher)
-    document.getElementById('output-box').innerHTML = cipher
-    document.getElementById('output-box').style.visibility = "visible"
+    
+    // document.getElementById('output-box').innerHTML = cipher
+    // document.getElementById('output-box').style.visibility = "visible"
 }
 
 function decrypt(){
