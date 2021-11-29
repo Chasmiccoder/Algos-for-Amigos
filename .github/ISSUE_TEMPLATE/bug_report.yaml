@@ -44,7 +44,3 @@ body:
       label: Additional Context
       description: Add any other context about the problem here. You can include images, plots, etc.
       placeholder: "More context, images, graphs, plots, etc."
-- type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this bug report!
