@@ -1,6 +1,5 @@
 name: 🐛 Bug Report
 description: Spotted a bug? Report it to us!
-title: ""
 labels: ["bug"]
 body:
   - type: markdown
