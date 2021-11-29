@@ -15,21 +15,18 @@ body:
       value: "A clear and concise description of what the bug is"
     validations:
       required: true
-
   - type: textarea
     id: to-reproduce
     attributes:
       label: To Reproduce
       description: Please copy and paste any relevant code (This will be automatically formatted, so no need for backticks)
       render: shell
-
   - type: textarea
     id: bug-output
     attributes:
       label: Code Output
       description: Please paste the relevant output here (This will be automatically formatted, so no need for backticks)
       render: shell
-
   - type: textarea
     id: expected-behaviour
     attributes:
@@ -38,21 +35,15 @@ body:
       value: "A clear and concise description of what you expected to happen"
     validations:
       required: true
-
   - type: textarea
     id: your-environment
     attributes:
       label: Your Environment
       description: Please use `qutip.about()` to get the information about your environment and paste it here
       render: shell
-
-
   - type: textarea
     id: additional-context
     attributes:
       label: Additional Context
       description: Add any other context about the problem here. You can include images, plots, etc.
       value: "More context, images, graphs, plots, etc."
-    
- 
-
