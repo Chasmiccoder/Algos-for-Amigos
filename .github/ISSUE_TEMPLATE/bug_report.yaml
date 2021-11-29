@@ -11,7 +11,7 @@ body:
     attributes:
       label: Bug Description
       description: Tell us what went wrong
-      value: "A clear and concise description of what the bug is"
+      placeholder: "A clear and concise description of what the bug is"
     validations:
       required: true
   - type: textarea
