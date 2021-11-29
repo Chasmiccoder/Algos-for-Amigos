@@ -22,6 +22,7 @@ body:
     attributes:
       label: Code Output
       description: Please paste the relevant output here (This will be automatically formatted, so no need for backticks)
+      placeholder: "Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True\nQobj data =\n[[1. 0.]\n[0. 1.]]"
       render: shell
   - type: textarea
     id: expected-behaviour
@@ -36,6 +37,7 @@ body:
     attributes:
       label: Your Environment
       description: Please use 'qutip.about()' to get the information about your environment and paste it here
+      placeholder: "QuTiP Version:      ***\nNumpy Version:      ***\nScipy Version:      ***\nCython Version:     ***\nMatplotlib Version: ***\nPython Version:     ***\nNumber of CPUs:     ***\nBLAS Info:          ***\nOPENMP Installed:   ***\nINTEL MKL Ext:      ***\nPlatform Info:      ***"
       render: shell
     validations:
       required: true
@@ -45,3 +47,5 @@ body:
       label: Additional Context
       description: Add any other context about the problem here. You can include images, plots, etc.
       placeholder: "More context, images, graphs, plots, etc."
+  - type: markdown
+    value: "Thanks for taking the time to fill out this bug report!"
