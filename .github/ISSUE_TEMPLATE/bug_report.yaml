@@ -15,7 +15,7 @@ body:
     attributes:
       label: To Reproduce
       description: Please copy and paste any relevant code (This will be automatically formatted, so no need for backticks)
-      placeholder: "from qutip import identity\nprint(identity(2))"
+      placeholder: "from qutip import identity print(identity(2))"
       render: shell
   - type: textarea
     id: bug-output
