@@ -2,10 +2,6 @@ name: 🐛 Bug Report
 description: Spotted a bug? Report it to us!
 labels: ["bug"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this bug report!
   - type: textarea
     id: bug-description
     attributes:
@@ -19,6 +15,7 @@ body:
     attributes:
       label: To Reproduce
       description: Please copy and paste any relevant code (This will be automatically formatted, so no need for backticks)
+      placeholder: "from qutip import identity\nprint(identity(2))"
       render: shell
   - type: textarea
     id: bug-output
@@ -40,9 +37,15 @@ body:
       label: Your Environment
       description: Please use 'qutip.about()' to get the information about your environment and paste it here
       render: shell
+    validations:
+      required: true
   - type: textarea
     id: additional-context
     attributes:
       label: Additional Context
       description: Add any other context about the problem here. You can include images, plots, etc.
       placeholder: "More context, images, graphs, plots, etc."
+- type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
