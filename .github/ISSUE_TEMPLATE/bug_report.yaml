@@ -39,7 +39,7 @@ body:
     id: your-environment
     attributes:
       label: Your Environment
-      description: Please use `qutip.about()` to get the information about your environment and paste it here
+      description: Please use 'qutip.about()' to get the information about your environment and paste it here
       render: shell
   - type: textarea
     id: additional-context
