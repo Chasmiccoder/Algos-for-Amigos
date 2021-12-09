@@ -4,7 +4,7 @@ https://qutip.org/tutorials.html
 """
 
 from numpy import pi
-from qutip import eseries, sigmax
+from qutip import eseries, sigmax, esval, expect
 
 
 # Aesthetic function
@@ -31,6 +31,23 @@ es2   = eseries(0.5 * sigmax(), 1j * omega) + eseries(0.5 * sigmax(), -1j * omeg
 print(es2)
 
 wait()
+
+
+""" --------------- </Evaluate the eseries object at various times> --------------- """
+
+# At t = 0
+print("sigma-x * cos(w.t) at time t = 0\n", esval(es2, 0.0) )
+
+print("sigma-x * cos(w.t) at time t = [0,pi,2pi]\n", esval(es2, [0.0, 1.0 * pi, 2.0*pi]))
+
+wait()
+
+""" --------------- </Expectation of eseries> --------------- """
+
+print("Expectation of sigma-x on sigma-x * cos(w.t)\n", expect(sigmax(), es2))
+
+
+
 
 
 
