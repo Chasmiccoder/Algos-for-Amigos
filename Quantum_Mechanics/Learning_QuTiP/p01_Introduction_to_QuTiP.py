@@ -355,10 +355,9 @@ IPython 	7.30.1
 Python	    3.9.6
 OS	nt [win32]
 
-Use -
+Use (in jupyter)-
 from qutip.ipynbtools import version_table
 version_table()
-in jupyter
 """
 
 print("\n\n--- reached the end ---\n")
