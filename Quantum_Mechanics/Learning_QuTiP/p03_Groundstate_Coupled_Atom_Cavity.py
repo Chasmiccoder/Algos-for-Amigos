@@ -42,6 +42,33 @@ def compute(N, wc, wa, glist, use_rwa):
     return nc_expt, na_expt, ket2dm(psi_ground)
 
 
+# Calculation -
+wc = 1.0 * 2 * np.pi  # cavity frequency
+wa = 1.0 * 2 * np.pi  # atom frequency
+N = 20                # number of cavity fock states
+use_rwa = False       # set to True to see that non-RWA is necessary in this regime
+
+glist = np.linspace(0, 2.5, 50) * 2 * np.pi  # coupling strength vector
+
+start_time = time.time()
+
+nc, na, rhoss_final = compute(N, wc, wa, glist, use_rwa)
+
+print('Time elapsed = ' + str(time.time() - start_time))
+
+
+fig, ax = plt.subplots(figsize=(8,6))
+
+ax.plot(glist/(2*np.pi), nc)
+
+
+
+
+
+
+
+
+
 
 
 
