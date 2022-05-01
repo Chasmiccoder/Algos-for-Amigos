@@ -1,0 +1,4 @@
+Just use
+
+    strings static
+
