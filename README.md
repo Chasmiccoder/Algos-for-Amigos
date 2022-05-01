@@ -8,54 +8,6 @@ This repository contains all the algorithms we have encountered in the fields of
 ### Contents -
 
 
-<!--
-```
-Algos for Amigos
-├── Computer Science  
-│   │
-│   ├── DSA Fundamentals  
-│   │   ├── Sorting  
-│   │   ├── Stacks, Queues, Linked Lists  
-│   │   └── Graphs  
-│   │
-│   ├── Competitive Programming  
-│   │   ├── Codeforces  
-│   │   └── Leetcode  
-│   │
-│   ├── Programming Languages
-│   │   ├── C
-│   │   ├── C++
-│   │   └── Python
-│   │
-│   ├── Object Oriented Programming
-│   │
-│   ├── Interview Questions 
-│   │
-│   ├── Machine Learning
-│   │   └── Classification
-│   │
-│   ├── Database Management Systems
-│   │
-│   ├── Assembly Level Programming
-│   │
-│   ├── Advanced Algorithms
-│   │
-│   └── Cryptography
-│       ├── Base64 Encoder Decoder
-│       ├── Caesar Cipher
-│       ├── Cracking RSA Encryption
-│       └── Vigenere Cipher
-│
-├── Mathematics
-│   │
-│   ├── Linear Algebra
-│   └── Series
-│
-└── Quantum Computing
-    └── Fundamentals
-
-```
--->
 
 ```
 Algos for Amigos
@@ -65,6 +17,7 @@ Algos for Amigos
 │   │   ├── Sorting  
 │   │   ├── Stacks, Queues, Linked Lists  
 │   │   └── Graphs  
+│   │
 │   │
 │   ├── Programming Languages
 │   │   ├── C
@@ -75,12 +28,14 @@ Algos for Amigos
 │   │   └── Supervised Learning
 │   │       └── Classification
 │   │
-│   └── Cryptography
-│       ├── Base64
-│       ├── Caesar Cipher
-│       ├── Hex
-│       ├── RSA
-│       └── Vigenere Cipher
+│   └── Cyber Security
+│       └── Cryptography
+│       │   ├── Base64 Encoder Decoder
+│       │   ├── Caesar Cipher
+│       │   ├── Cracking RSA Encryption
+│       │   └── Vigenere Cipher
+│       │
+│       └── Pico CTF Writeups
 │
 ├── Mathematics
 │   │
@@ -88,11 +43,10 @@ Algos for Amigos
 │   └── Series
 │
 └── Quantum Computing
-    └── Experiments
-    └── Fundamentals
+    └── Learning QuTiP
 
 ```
-  
+
 <br>
 <br>
 
@@ -104,9 +58,6 @@ Work in Progress..
 To Generate the tree, install file-tree-generator extension,
 right click on folder, and click on Generate To Tree
 -->
-
-
-
 
 <!--
 ```bash
