@@ -12,6 +12,24 @@ Grep to get line with a particular string str
 
 	grep str filename
 
+Open the cwd in files
+
+	nautilus .
+
+Print properties of file
+
+	file filename
+
+Rename a file
+
+	mv oldName newName
+
+Eye of gnome (to display image)
+
+	eog filename
+
+
+
 ### Web Exploitation
 
 Types of request - GET, POST, HEAD
@@ -82,6 +100,16 @@ to download files straight into the cwd
 Copy python script output to clipboard
 
 	python script.py | xclip -sel copy
+
+### Forensics
+
+Terminal based hex editor - xxd
+To print the image header
+
+	xxd image | head
+
+Get it in terms of 2 hex bytes
+	xxd -g 1 tunn3l_v1s10n.bmp | head
 
 ### Network Communication
 netcat
