@@ -183,7 +183,7 @@ Simple ping scan
 Scanning from port 31000 to 32000 and finding their services
 
     nmap -v -sV -p 31000-32000 localhost
-
+sudo chmod 666 /var/run/docker.sock
 Output -
 ```
 PORT      STATE SERVICE     VERSION

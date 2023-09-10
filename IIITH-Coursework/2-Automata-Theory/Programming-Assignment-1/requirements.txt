@@ -1,0 +1,4 @@
+# For the animation-gif making script
+numpy==1.23.2
+opencv-python==4.6.0.66
+Pillow==9.2.0
